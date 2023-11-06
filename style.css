@@ -1,0 +1,21 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas{
+    background-color: black;
+}
+
+.counter-of-bottles{
+    margin-top: -390px;
+    margin-left: -290px;
+    font-size: 38px;
+}
+
+.counter-of-coins{
+    margin-top: -74px;
+    margin-left: -153px;
+    font-size: 38px;
+}
