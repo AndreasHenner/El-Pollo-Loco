@@ -88,11 +88,15 @@ const level1 = new Level(
   ],
 
   [
-    new StatusbarBottles(),
+    new StatusbarBottles()
   ],
 
   [
-    new StatusbarCoins(),
+    new StatusbarCoins()
   ],
+
+  [
+    new ThrowableObject()
+  ]
 
 );

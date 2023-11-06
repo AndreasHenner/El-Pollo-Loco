@@ -55,6 +55,7 @@ class Character extends MovableObject {
     this.animate();
     this.moveRight();
     this.jump();
+   
   }
 
   // lässt den Character bewegen
@@ -83,7 +84,7 @@ class Character extends MovableObject {
       }
 
       this.world.camera_x = -this.x + 100; // x Koordinate des Characters ist immer das Gegenteil zu X Koordinate des Hintergrundes, 100 = Pos Character auf X Achse
-    }, 1000 / 60);
+    }, 1000 / 30);
 
     setInterval(() => {
       // Dead-Animation

@@ -31,6 +31,10 @@ window.addEventListener('keydown', (e) => {
     keyboard.SPACE = true;
     // space 
   }
+  if (e.keyCode == '68') {
+    keyboard.D = true;
+    // D (THROW)
+  }
 }); 
 
 // wenn Taste losgelassen wird wird es wieder auf false gesetzt!
@@ -55,5 +59,9 @@ window.addEventListener('keyup', (e) => {
   if (e.keyCode == '32') {
     keyboard.SPACE = false;
     // space 
+  }
+  if (e.keyCode == '68') {
+    keyboard.D = false;
+    // D (THROW)
   }
 }); 
