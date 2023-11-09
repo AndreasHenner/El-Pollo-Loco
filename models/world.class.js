@@ -7,7 +7,7 @@ class World {
   camera_x = 0; // Bildausschnitt, bzw Hintergrund X Koordinate
   statusBarHealth = new StatusbarHealth();
   statusBarBottles = new StatusbarBottles();
-  statusBarCoins = new StatusbarCoins();
+  statusBarCoins = new StatusbarCoins();  
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
@@ -36,10 +36,12 @@ class World {
 }
 
 checkThrowObjects() {
-  if (this.keyboard.D) {
-    let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+  if (this.keyboard.D && this.throwableObjects.length > 0) {
+    let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 100)
     this.throwableObjects.push(bottle);
+ 
   }
+
 }
 
  // Character mit Enemy
@@ -62,8 +64,11 @@ checkThrowObjects() {
         if (this.character.isColliding(item)) {
           itemArray.splice(index, 1);
           collection++;
+          let bottle = new ThrowableObject; 
+          this.throwableObjects.push(bottle); // fügt gesammelte Bottle in Array throwableObjects hinzu
           counter.innerHTML = collection;
           this.collecting_sound.play();
+          console.log(this.throwableObjects.length);
         }
       });
     }, 10);
@@ -81,6 +86,7 @@ checkThrowObjects() {
     this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
     this.addObjectsToMap(this.level.bottles); // Bottles werden zur Map hinzugefügt
+    this.addObjectsToMap(this.throwableObjects); // ThrowableObjekt wird zur Map hinzugefügt
     
     this.ctx.translate(-this.camera_x, 0); // Verschieben des Hintergrundes rückgängig machen
 
@@ -88,8 +94,7 @@ checkThrowObjects() {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarCoins);
-    this.addObjectsToMap(this.throwableObjects);
-
+   
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
     requestAnimationFrame(function () {

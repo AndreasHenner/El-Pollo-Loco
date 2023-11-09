@@ -55,7 +55,6 @@ class Character extends MovableObject {
     this.animate();
     this.moveRight();
     this.jump();
-   
   }
 
   // lässt den Character bewegen
