@@ -7,9 +7,11 @@ class World {
   camera_x = 0; // Bildausschnitt, bzw Hintergrund X Koordinate
   statusBarHealth = new StatusbarHealth();
   statusBarBottles = new StatusbarBottles();
-  statusBarCoins = new StatusbarCoins();  
+  statusBarCoins = new StatusbarCoins();
+ 
   collectionBottles = 0;
   collectionCoins = 0;
+
   collecting_sound = new Audio("audio/collect.mp3");
   throwableObjects = [];
 
@@ -19,9 +21,9 @@ class World {
     this.keyboard = keyboard; // es wird auf die obere Variable keyboard zugegriffen und ersetzt die variable im constructor
     this.draw();
     this.setWorld();
-    this.showCollectedItems(this.collectionCoins,"counterCoins",this.level.coins);
-    this.showCollectedItems(this.collectionBottles,"counterBottles",this.level.bottles);
     this.run();
+    this.showCollectedBottles();
+    this.showCollectedCoins();
   }
 
   setWorld() {
@@ -30,21 +32,53 @@ class World {
 
   run() {
     setInterval(() => {
-   this.checkCollisions();
-   this.checkThrowObjects();
-  }, 200);
-}
-
-checkThrowObjects() {
-  if (this.keyboard.D && this.throwableObjects.length > 0) {
-    let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 100)
-    this.throwableObjects.push(bottle);
- 
+      this.checkCollisions();
+      this.checkThrowObjects();
+    }, 200);
   }
 
-}
+  checkThrowObjects() {
+    const counter = document.getElementById('counterBottles');
+    if (this.keyboard.D && this.collectionBottles > 0) {
+      let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 100); // erzeugt eine neue Flasche
+      this.throwableObjects.push(bottle);
 
- // Character mit Enemy
+      this.collectionBottles--;
+      counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
+    }
+  }
+
+  // Flaschen sammeln und anzeigen
+  showCollectedBottles() {
+    const counter = document.getElementById('counterBottles');
+     setInterval(() => {
+      this.level.bottles.forEach((bottle, index) => {
+        if (this.character.isColliding(bottle)) {
+          this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
+          this.collectionBottles++; // Collection Flaschen wird erhöht wenn eingesammelt
+          counter.innerHTML = this.collectionBottles; // Der Counter Flaschen zeigt die Collection an
+          this.collecting_sound.play();
+        }
+      });
+    }, 10);
+  }
+
+    // Coins sammeln und anzeigen
+  showCollectedCoins() {
+    const counter = document.getElementById('counterCoins');
+     setInterval(() => {
+      this.level.coins.forEach((coin, index) => {
+        if (this.character.isColliding(coin)) {
+          this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
+          this.collectionCoins++; // Collection Flaschen wird erhöht wenn eingesammelt
+          counter.innerHTML = this.collectionCoins; // Der Counter Flaschen zeigt die Collection an
+          this.collecting_sound.play();
+        }
+      });
+    }, 10);
+  }
+
+  // Character mit Enemy
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -52,26 +86,6 @@ checkThrowObjects() {
         this.statusBarHealth.setPercentage(this.character.energy); // StatusBar Health wird aktualisiert wenn Character getroffen wird
       }
     });
-  }
-
-  // Items sammeln und anzeigen
-  showCollectedItems(collectionItems, counterElement, itemArray) {
-    const counter = document.getElementById(counterElement);
-    let collection = collectionItems;
-
-    const checkCollision = setInterval(() => {
-      itemArray.forEach((item, index) => {
-        if (this.character.isColliding(item)) {
-          itemArray.splice(index, 1);
-          collection++;
-          let bottle = new ThrowableObject; 
-          this.throwableObjects.push(bottle); // fügt gesammelte Bottle in Array throwableObjects hinzu
-          counter.innerHTML = collection;
-          this.collecting_sound.play();
-          console.log(this.throwableObjects.length);
-        }
-      });
-    }, 10);
   }
 
   draw() {
@@ -87,14 +101,14 @@ checkThrowObjects() {
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
     this.addObjectsToMap(this.level.bottles); // Bottles werden zur Map hinzugefügt
     this.addObjectsToMap(this.throwableObjects); // ThrowableObjekt wird zur Map hinzugefügt
-    
+
     this.ctx.translate(-this.camera_x, 0); // Verschieben des Hintergrundes rückgängig machen
 
     //Koordinaten sind nicht fix und gehen mit der Kamera mit
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarCoins);
-   
+
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
     requestAnimationFrame(function () {
