@@ -19,3 +19,10 @@ canvas{
     margin-left: -166px;
     font-size: 38px;
 }
+
+.endboss-statusbar-icon{
+    width: 60px;
+    margin-top: -466px;
+    position: absolute;
+    margin-left: 128px;
+}

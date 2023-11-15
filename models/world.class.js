@@ -8,12 +8,13 @@ class World {
   statusBarHealth = new StatusbarHealth();
   statusBarBottles = new StatusbarBottles();
   statusBarCoins = new StatusbarCoins();
- 
+  statusBarEndboss = new StatusbarEndboss();
   collectionBottles = 0;
   collectionCoins = 0;
-
   collecting_sound = new Audio("audio/collect.mp3");
   throwableObjects = [];
+  endboss = new Endboss();
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -24,6 +25,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
+   
   }
 
   setWorld() {
@@ -86,6 +88,17 @@ class World {
         this.statusBarHealth.setPercentage(this.character.energy); // StatusBar Health wird aktualisiert wenn Character getroffen wird
       }
     });
+
+    // Endboss mit ThrowableObject(Bottle)
+    this.throwableObjects.forEach((throwableObject, index) => {
+      if (this.endboss.isColliding(throwableObject)) {
+          this.endboss.hit();
+          this.statusBarEndboss.setPercentage(this.endboss.energy); // StatusBar Health wird aktualisiert wenn Endboss getroffen wird
+         
+          splashBottle();
+        }
+    });
+
   }
 
   draw() {
@@ -108,6 +121,7 @@ class World {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarCoins);
+    this.addToMap(this.statusBarEndboss);
 
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
