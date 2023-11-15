@@ -94,7 +94,7 @@ class World {
       if (this.endboss.isColliding(throwableObject)) {
           this.endboss.hit();
           this.statusBarEndboss.setPercentage(this.endboss.energy); // StatusBar Health wird aktualisiert wenn Endboss getroffen wird
-         
+          this.throwableObjects.splice(index, 1); // Bild des Items wird gelöscht
           splashBottle();
         }
     });
