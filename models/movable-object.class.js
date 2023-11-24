@@ -19,7 +19,7 @@ class MovableObject extends DrawableObject {
 
   isAboveGround() {
     if (this instanceof ThrowableObject) { // Throwable Objekt fallen immer ganz runter
-      return true;
+      return true;   //Tiefe des Falles der Flasche
     } else {
       return this.y < 130;
     }
@@ -36,7 +36,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.energy -= 5; // sobald Kollidiert, Energie des Characters wird weniger
+    this.energy -= 5; // sobald kollidiert, Energie des Characters/Endboss wird weniger
     if (this.energy < 0) {
       this.energy = 0;
     } else {

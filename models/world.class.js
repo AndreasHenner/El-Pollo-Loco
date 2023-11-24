@@ -15,7 +15,6 @@ class World {
   throwableObjects = [];
   endboss = new Endboss();
 
-
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
     this.canvas = canvas; // es wird auf die obere Variable canvas zugegriffen und ersetzt die variable im constructor
@@ -25,7 +24,6 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-   
   }
 
   setWorld() {
@@ -40,9 +38,12 @@ class World {
   }
 
   checkThrowObjects() {
-    const counter = document.getElementById('counterBottles');
+    const counter = document.getElementById("counterBottles");
     if (this.keyboard.D && this.collectionBottles > 0) {
-      let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 100); // erzeugt eine neue Flasche
+      let bottle = new ThrowableObject(
+        this.character.x + 60,
+        this.character.y + 100
+      ); // erzeugt eine neue Flasche
       this.throwableObjects.push(bottle);
 
       this.collectionBottles--;
@@ -52,8 +53,8 @@ class World {
 
   // Flaschen sammeln und anzeigen
   showCollectedBottles() {
-    const counter = document.getElementById('counterBottles');
-     setInterval(() => {
+    const counter = document.getElementById("counterBottles");
+    setInterval(() => {
       this.level.bottles.forEach((bottle, index) => {
         if (this.character.isColliding(bottle)) {
           this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
@@ -65,10 +66,10 @@ class World {
     }, 10);
   }
 
-    // Coins sammeln und anzeigen
+  // Coins sammeln und anzeigen
   showCollectedCoins() {
-    const counter = document.getElementById('counterCoins');
-     setInterval(() => {
+    const counter = document.getElementById("counterCoins");
+    setInterval(() => {
       this.level.coins.forEach((coin, index) => {
         if (this.character.isColliding(coin)) {
           this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
@@ -91,14 +92,17 @@ class World {
 
     // Endboss mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => {
-      if (this.endboss.isColliding(throwableObject)) {
-          this.endboss.hit();
-          this.statusBarEndboss.setPercentage(this.endboss.energy); // StatusBar Health wird aktualisiert wenn Endboss getroffen wird
-          this.throwableObjects.splice(index, 1); // Bild des Items wird gelöscht
-          splashBottle();
-        }
+      if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
+        throwableObject.splashed = true;
+        this.endboss.hit();
+        this.statusBarEndboss.setPercentage(this.endboss.energy);
+    
+        setTimeout(() => {
+          throwableObject.deletable = true;
+          this.throwableObjects.splice(index, 1);
+        }, 200);
+      }
     });
-
   }
 
   draw() {
