@@ -93,14 +93,13 @@ class World {
     // Endboss mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
-        throwableObject.splashed = true;
+        throwableObject.hitted();
+    
         this.endboss.hit();
         this.statusBarEndboss.setPercentage(this.endboss.energy);
-    
-        setTimeout(() => {
-          throwableObject.deletable = true;
-          this.throwableObjects.splice(index, 1);
-        }, 200);
+      } 
+      if (throwableObject.deletable) {
+        this.throwableObjects.splice(index, 1);
       }
     });
   }

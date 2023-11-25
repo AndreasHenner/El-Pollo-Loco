@@ -2,6 +2,12 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #c39237;
+    font-family: math;
+}
+
+h1 {
+    font-size: 48px;
 }
 
 canvas{

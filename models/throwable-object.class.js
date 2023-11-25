@@ -15,6 +15,9 @@ class ThrowableObject extends MovableObject {
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
 
+  splashing_sound = new Audio("audio/splash.mp3");
+  throwing_sound = new Audio("audio/throw.mp3");
+
   constructor(x, y) {
     super().loadImg("img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png");
     this.loadImages(this.IMAGES_THROWING); // lädt Bilder für das Werfen
@@ -31,11 +34,12 @@ class ThrowableObject extends MovableObject {
   deletable = false;
 
   throw() {
-    this.speedY = 25; // Weite des Wurfes
+    this.throwing_sound.play();
+    this.speedY = 22; // Weite des Wurfes
     this.applyGravity(); // Flasche fällt
-
+    
     setInterval(() => {
-      this.x += 10;
+      this.x += 20; //Schnelligkeit des Wurfes
     }, 25);
 
     setInterval(() => {
@@ -45,9 +49,13 @@ class ThrowableObject extends MovableObject {
         this.playAnimation(this.IMAGES_THROWING);
       }
     }, 100);
-  
   }
-
  
-
+  hitted() {
+    this.splashed = true;
+   
+    setTimeout(() => {
+      this.deletable = true;
+    }, 200);
+  }
 }

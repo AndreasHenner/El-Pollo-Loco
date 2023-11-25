@@ -4,7 +4,7 @@ class Character extends MovableObject {
   height = 300;
   width = 120;
   y = 30;
-  speed = 10;
+  speed = 15;
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -50,7 +50,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_WALKING); // lädt Bilder für das Laufen
     this.loadImages(this.IMAGES_JUMPING); // lädt Bilder für das Springen
     this.loadImages(this.IMAGES_DEAD); // lädt Bilder für das Sterben
-    this.loadImages(this.IMAGES_HURT); // lädt Bilder für das verletzen
+    this.loadImages(this.IMAGES_HURT); // lädt Bilder für das Verletzen
     this.applyGravity();
     this.animate();
     this.moveRight();
