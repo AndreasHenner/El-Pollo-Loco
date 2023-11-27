@@ -34,9 +34,9 @@ class ThrowableObject extends MovableObject {
   deletable = false;
 
   throw() {
-    this.throwing_sound.play();
     this.speedY = 22; // Weite des Wurfes
     this.applyGravity(); // Flasche fällt
+    /*this.throwing_sound.play();*/ /*Fehlermeldung*/
     
     setInterval(() => {
       this.x += 20; //Schnelligkeit des Wurfes

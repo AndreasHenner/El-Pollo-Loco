@@ -5,6 +5,8 @@ class Character extends MovableObject {
   width = 120;
   y = 30;
   speed = 15;
+  
+
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -42,6 +44,7 @@ class Character extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png"
   ];
 
+
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
 
@@ -55,6 +58,7 @@ class Character extends MovableObject {
     this.animate();
     this.moveRight();
     this.jump();
+   
   }
 
   // lässt den Character bewegen
@@ -89,6 +93,7 @@ class Character extends MovableObject {
       // Dead-Animation
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+        this.loadImg("img/9_intro_outro_screens/game_over/oh no you lost!.png");
         // Hurt-Animation
       } else if(this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
@@ -97,8 +102,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {
         //Walk-Animation
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          // es wird auf die Variable Keyboard aus der world zugegriffen
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {// es wird auf die Variable Keyboard aus der world zugegriffen
           this.playAnimation(this.IMAGES_WALKING);
         }
       }

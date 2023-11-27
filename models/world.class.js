@@ -24,10 +24,12 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
+    
   }
 
   setWorld() {
     this.character.world = this; // world wird an den Character übergeben dass Character auf variablen von der world zugreifen kann
+    this.endboss.world = this;
   }
 
   run() {
@@ -45,7 +47,6 @@ class World {
         this.character.y + 100
       ); // erzeugt eine neue Flasche
       this.throwableObjects.push(bottle);
-
       this.collectionBottles--;
       counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
     }
@@ -94,9 +95,9 @@ class World {
     this.throwableObjects.forEach((throwableObject, index) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
-    
-        this.endboss.hit();
-        this.statusBarEndboss.setPercentage(this.endboss.energy);
+        this.endboss.isHurt() == true;
+        this.endboss.hit(); // Energy wird weniger
+        this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
       } 
       if (throwableObject.deletable) {
         this.throwableObjects.splice(index, 1);
@@ -112,6 +113,7 @@ class World {
     // fixe Koordinaten
     this.addObjectsToMap(this.level.backgroundObjects); // BackgroundObjects wird zur Map hinzugefügt
     this.addToMap(this.character); // der Character wird gezeichnet und im Canvas angezeigt
+    this.addToMap(this.endboss);
     this.addObjectsToMap(this.level.enemies); // Enemies wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
@@ -146,7 +148,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+   /* mo.drawFrame(this.ctx);*/
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
