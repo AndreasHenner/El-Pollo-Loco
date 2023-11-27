@@ -12,6 +12,7 @@ class World {
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
+   throwing_sound = new Audio("audio/throw.mp3");
   throwableObjects = [];
   endboss = new Endboss();
 
@@ -24,7 +25,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    
+    this.showLostScreen();
   }
 
   setWorld() {
@@ -46,6 +47,7 @@ class World {
         this.character.x + 60,
         this.character.y + 100
       ); // erzeugt eine neue Flasche
+      this.throwing_sound.play(); 
       this.throwableObjects.push(bottle);
       this.collectionBottles--;
       counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
@@ -166,4 +168,18 @@ class World {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
+
+  showLostScreen() {
+    let lostScreen = document.getElementById('lostScreen');
+  
+    if (this.character.isDead()) {
+        // Der Charakter ist tot, zeige das Bild an
+        lostScreen.classList.remove('d-none');
+    } else {
+        // Der Charakter ist nicht tot, verstecke das Bild
+        lostScreen.classList.add('d-none');
+    }
+  }
 }
+
+

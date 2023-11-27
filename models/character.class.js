@@ -44,10 +44,10 @@ class Character extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png"
   ];
 
-
+  
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
-
+ 
   constructor() {
     super().loadImg("img/2_character_pepe/2_walk/W-21.png"); // loadImg wird hier von der SuperKlasse aufgerufen
     this.loadImages(this.IMAGES_WALKING); // lädt Bilder für das Laufen
@@ -58,7 +58,6 @@ class Character extends MovableObject {
     this.animate();
     this.moveRight();
     this.jump();
-   
   }
 
   // lässt den Character bewegen
@@ -91,9 +90,10 @@ class Character extends MovableObject {
 
     setInterval(() => {
       // Dead-Animation
+      
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        this.loadImg("img/9_intro_outro_screens/game_over/oh no you lost!.png");
+        this.showLostScreen();
         // Hurt-Animation
       } else if(this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
@@ -108,4 +108,17 @@ class Character extends MovableObject {
       }
     }, 75);
   }
+
+  showLostScreen() {
+    let lostScreen = document.getElementById('lostScreen');
+    if (this.isDead()) {
+        // Der Charakter ist tot, zeige das Bild an
+        lostScreen.classList.remove('d-none');
+    } else {
+        // Der Charakter ist nicht tot, verstecke das Bild
+        lostScreen.classList.add('d-none');
+    }
+  }
 }
+
+

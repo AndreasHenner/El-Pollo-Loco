@@ -32,3 +32,15 @@ canvas{
     position: absolute;
     margin-left: 128px;
 }
+
+.lost-screen {
+   height: 480px;
+   width: 720px;
+   margin-top: -480px;
+   position: absolute;
+   margin-left: -360px;
+}
+
+.d-none {
+    display: none;
+}

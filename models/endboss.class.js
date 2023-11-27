@@ -34,7 +34,6 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_DEAD); 
     this.x = 4400;
     this.animate();
-    console.log(this.isHurt());
   }
 
   animate() {
