@@ -44,6 +44,20 @@ class Character extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png"
   ];
 
+  IMAGES_SLEEP = [
+    "img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "img/2_character_pepe/1_idle/long_idle/I-20.png"
+  ];
+
+
   
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
@@ -54,6 +68,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_JUMPING); // lädt Bilder für das Springen
     this.loadImages(this.IMAGES_DEAD); // lädt Bilder für das Sterben
     this.loadImages(this.IMAGES_HURT); // lädt Bilder für das Verletzen
+    this.loadImages(this.IMAGES_SLEEP);
     this.applyGravity();
     this.animate();
     this.moveRight();
@@ -63,9 +78,14 @@ class Character extends MovableObject {
   // lässt den Character bewegen
 
   animate() {
-    // Walk right
+    // Sleep
     setInterval(() => {
-      this.walking_sound.pause();
+      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.playAnimation(this.IMAGES_SLEEP);
+        this.walking_sound.pause();
+        return;  // Verlasse die Funktion, um andere Aktionen zu verhindern
+      }
+     // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false; // Bild wird wieder zurückgespiegelt
@@ -79,11 +99,14 @@ class Character extends MovableObject {
         this.otherDirection = true; // Bild wird gespiegelt
         this.walking_sound.play();
       }
-
+      
       //Jump
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-      }
+      } 
+      
+       
+    
 
       this.world.camera_x = -this.x + 100; // x Koordinate des Characters ist immer das Gegenteil zu X Koordinate des Hintergrundes, 100 = Pos Character auf X Achse
     }, 1000 / 30);

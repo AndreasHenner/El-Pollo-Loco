@@ -12,7 +12,7 @@ class World {
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
-   throwing_sound = new Audio("audio/throw.mp3");
+  throwing_sound = new Audio("audio/throw.mp3");
   throwableObjects = [];
   endboss = new Endboss();
 
@@ -25,7 +25,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    this.showLostScreen();
+  
   }
 
   setWorld() {
@@ -47,7 +47,7 @@ class World {
         this.character.x + 60,
         this.character.y + 100
       ); // erzeugt eine neue Flasche
-      this.throwing_sound.play(); 
+      this.throwing_sound.play();
       this.throwableObjects.push(bottle);
       this.collectionBottles--;
       counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
@@ -95,11 +95,14 @@ class World {
 
     // Endboss mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => {
-      if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
+      if (
+        this.endboss.isColliding(throwableObject) &&
+        !throwableObject.splashed
+      ) {
         throwableObject.hitted();
         this.endboss.hit(); // Energy wird weniger
         this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
-      } 
+      }
       if (throwableObject.deletable) {
         this.throwableObjects.splice(index, 1);
       }
@@ -149,7 +152,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-   /* mo.drawFrame(this.ctx);*/
+    /* mo.drawFrame(this.ctx);*/
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -170,5 +173,3 @@ class World {
 
 
 }
-
-

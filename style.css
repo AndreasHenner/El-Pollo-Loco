@@ -59,3 +59,18 @@ canvas{
 .space-bar {
     width: 110px;
 }
+
+.icon-fullscreen-area {
+    gap: 10px;
+    align-items: center;
+    display: flex;
+}
+
+.icon-fullscreen {
+    height: 30px;
+}
+
+.icon-fullscreen:hover {
+    cursor: pointer;
+    height: 35px;
+}

@@ -5,7 +5,7 @@ let keyboard = new Keyboard();
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
-  
+ 
 }
 
 // wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
@@ -65,3 +65,8 @@ window.addEventListener('keyup', (e) => {
     // D (THROW)
   }
 }); 
+
+function showFullscreen() {
+    let canvas = document.getElementById('canvas');
+    canvas.requestFullscreen(); 
+}
