@@ -78,15 +78,19 @@ class Character extends MovableObject {
   // lässt den Character bewegen
 
   animate() {
+  
     // Sleep
     setInterval(() => {
-      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_SLEEP);
+      if (!this.sleepTimeout) {
+        this.sleepTimeout = setTimeout(() => {
+          this.playAnimation(this.IMAGES_SLEEP);
+        }, 2000);
+        
         this.walking_sound.pause();
-        return;  // Verlasse die Funktion, um andere Aktionen zu verhindern
       }
      // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        this.stopSleeping();
         this.moveRight();
         this.otherDirection = false; // Bild wird wieder zurückgespiegelt
         this.walking_sound.play();
@@ -95,6 +99,7 @@ class Character extends MovableObject {
       // Walk left
       if (this.world.keyboard.LEFT && this.x > 0) {
         // Character kann nicht nach links aus der Map raus laufen
+        this.stopSleeping();
         this.x -= this.speed;
         this.otherDirection = true; // Bild wird gespiegelt
         this.walking_sound.play();
@@ -102,18 +107,15 @@ class Character extends MovableObject {
       
       //Jump
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.stopSleeping();
         this.jump();
       } 
       
-       
-    
-
       this.world.camera_x = -this.x + 100; // x Koordinate des Characters ist immer das Gegenteil zu X Koordinate des Hintergrundes, 100 = Pos Character auf X Achse
     }, 1000 / 30);
 
     setInterval(() => {
       // Dead-Animation
-      
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         this.showLostScreen();
@@ -132,6 +134,11 @@ class Character extends MovableObject {
     }, 75);
   }
 
+  stopSleeping() {
+    clearTimeout(this.sleepTimeout);
+    this.sleepTimeout = null;
+  }
+
   showLostScreen() {
     let lostScreen = document.getElementById('lostScreen');
     if (this.isDead()) {
@@ -142,6 +149,8 @@ class Character extends MovableObject {
         lostScreen.classList.add('d-none');
     }
   }
+
+  
 }
 
 
