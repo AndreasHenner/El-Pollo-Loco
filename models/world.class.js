@@ -97,7 +97,6 @@ class World {
     this.throwableObjects.forEach((throwableObject, index) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
-        this.endboss.isHurt() == true;
         this.endboss.hit(); // Energy wird weniger
         this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
       } 
@@ -169,17 +168,7 @@ class World {
     this.ctx.restore();
   }
 
-  showLostScreen() {
-    let lostScreen = document.getElementById('lostScreen');
-  
-    if (this.character.isDead()) {
-        // Der Charakter ist tot, zeige das Bild an
-        lostScreen.classList.remove('d-none');
-    } else {
-        // Der Charakter ist nicht tot, verstecke das Bild
-        lostScreen.classList.add('d-none');
-    }
-  }
+
 }
 
 

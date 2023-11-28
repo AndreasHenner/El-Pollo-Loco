@@ -44,3 +44,18 @@ canvas{
 .d-none {
     display: none;
 }
+
+.game-instruction {
+    gap: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.game-instruction img {
+    height: 40px;
+    margin-left: -20px;
+}
+
+.space-bar {
+    width: 110px;
+}

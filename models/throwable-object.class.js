@@ -44,7 +44,7 @@ class ThrowableObject extends MovableObject {
 
     setInterval(() => {
      
-      if (this.splashed) {d
+      if (this.splashed) {
         this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
         this.splashing_sound.play();
       } else {
