@@ -25,7 +25,6 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-  
   }
 
   setWorld() {
@@ -86,23 +85,32 @@ class World {
 
   // Character mit Enemy
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
+   /* this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy); // StatusBar Health wird aktualisiert wenn Character getroffen wird
       }
-    });
+    });*/
 
     // Endboss mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => {
-      if (
-        this.endboss.isColliding(throwableObject) &&
-        !throwableObject.splashed
-      ) {
+      if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
         this.endboss.hit(); // Energy wird weniger
         this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
       }
+    });
+
+    // Enemies mit ThrowableObject(Bottle)
+    this.throwableObjects.forEach((throwableObject, index) => {
+      for (let index = 0; index < this.level.enemies.length; index++) {
+        const enemy = this.level.enemies[index];
+        if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
+          throwableObject.hitted();
+          this.level.enemies.splice(index, 1);
+        }
+      }
+      
       if (throwableObject.deletable) {
         this.throwableObjects.splice(index, 1);
       }
@@ -152,7 +160,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    /* mo.drawFrame(this.ctx);*/
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -170,6 +178,4 @@ class World {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
-
-
 }
