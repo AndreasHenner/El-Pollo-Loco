@@ -79,81 +79,85 @@ class Character extends MovableObject {
   // lässt den Character bewegen
 
   animate() {
+    let setTimeoutSleep; // Variable im umfassenderen Bereich definieren
   
-    // Sleep
     setInterval(() => {
-      if (!this.sleepTimeout) {
-        this.sleepTimeout = setTimeout(() => {
-          this.playAnimation(this.IMAGES_SLEEP);
-          this.snoring_sound.play();
-        }, 2000);
-        
-        this.walking_sound.pause();
-      }
-     // Walk right
+      // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.stopSleeping();
         this.moveRight();
-        this.otherDirection = false; // Bild wird wieder zurückgespiegelt
+        this.otherDirection = false;
         this.walking_sound.play();
       }
-
+  
       // Walk left
       if (this.world.keyboard.LEFT && this.x > 0) {
-        // Character kann nicht nach links aus der Map raus laufen
-        this.stopSleeping();
         this.x -= this.speed;
-        this.otherDirection = true; // Bild wird gespiegelt
+        this.otherDirection = true;
         this.walking_sound.play();
       }
-      
-      //Jump
+  
+      // Jump
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.stopSleeping();
         this.jump();
-      } 
-      
-      this.world.camera_x = -this.x + 100; // x Koordinate des Characters ist immer das Gegenteil zu X Koordinate des Hintergrundes, 100 = Pos Character auf X Achse
+      }
+  
+      this.world.camera_x = -this.x + 100;
     }, 1000 / 30);
-
+  
     setInterval(() => {
       // Dead-Animation
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         this.showLostScreen();
-        // Hurt-Animation
-      } else if(this.isHurt()) {
+        this.stopSleeping();
+      } 
+      // Hurt-Animation
+      else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-      } // Jump-Animation
+        this.stopSleeping();
+      } 
+      // Jump-Animation
       else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
-      } else {
-        //Walk-Animation
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {// es wird auf die Variable Keyboard aus der world zugegriffen
+        this.stopSleeping();
+      } 
+      // Walk-Animation
+      else {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimation(this.IMAGES_WALKING);
+          this.stopSleeping();
         }
+      }
+      // Sleep-Animation
+      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
+        setTimeoutSleep = setTimeout(() => {
+          this.playAnimation(this.IMAGES_SLEEP);
+          /*this.snoring_sound.play();*/
+        }, 2000);
+        this.walking_sound.pause();
       }
     }, 75);
   }
 
+  // Stop-Sleeping-Funktion
   stopSleeping() {
-    clearTimeout(this.sleepTimeout);
-    this.sleepTimeout = null;
+    clearTimeout(this.setTimeoutSleep);
+    this.setTimeoutSleep = null;
     this.snoring_sound.pause();
   }
 
   showLostScreen() {
     let lostScreen = document.getElementById('lostScreen');
     if (this.isDead()) {
-        // Der Charakter ist tot, zeige das Bild an
-        lostScreen.classList.remove('d-none');
+      // Der Charakter ist tot, zeige das Bild an
+      lostScreen.classList.remove('d-none');
     } else {
-        // Der Charakter ist nicht tot, verstecke das Bild
-        lostScreen.classList.add('d-none');
+      // Der Charakter ist nicht tot, verstecke das Bild
+      lostScreen.classList.add('d-none');
     }
   }
-
-  
 }
+  
+
 
 

@@ -111,7 +111,6 @@ class World {
           this.level.enemies.splice(index, 1);
         }
       }
-      
       if (throwableObject.deletable) {
         this.throwableObjects.splice(index, 1);
       }

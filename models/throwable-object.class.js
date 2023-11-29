@@ -36,7 +36,7 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 15; // Weite des Wurfes
     this.applyGravity(); // Flasche fällt
-    
+   
    
     setInterval(() => {
       this.x += 10; //Schnelligkeit des Wurfes

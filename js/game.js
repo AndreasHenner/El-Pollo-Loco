@@ -1,11 +1,13 @@
 let canvas; // ist der Hintergrund des Spiels, ein Container mit Breite und Höhe!
 let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
+background_sound = new Audio("audio/backgroundMusic.mp3");
 
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
- 
+  this.background_sound.play();
+  
 }
 
 // wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
