@@ -2,9 +2,22 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #c39237;
     font-family: math;
+   
 }
+
+body::before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/5_background/second_half_background.png');
+    opacity: 0.6; /* Dunkelheit des Hintergrundbildes */
+    z-index: -1; 
+  }
 
 h1 {
     font-size: 48px;
@@ -49,6 +62,9 @@ canvas{
     gap: 24px;
     display: flex;
     align-items: center;
+    width: 720px;
+    background-color: orange;
+    justify-content: center;
 }
 
 .game-instruction img {
@@ -64,6 +80,11 @@ canvas{
     gap: 10px;
     align-items: center;
     display: flex;
+    background-color: orange;
+    justify-content: center;
+    width: 720px;
+    border-bottom-left-radius: 65px;
+    border-bottom-right-radius: 65px;
 }
 
 .icon-fullscreen {

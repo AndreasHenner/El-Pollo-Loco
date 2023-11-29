@@ -42,10 +42,10 @@ class World {
   checkThrowObjects() {
     const counter = document.getElementById("counterBottles");
     if (this.keyboard.D && this.collectionBottles > 0) {
-      let bottle = new ThrowableObject(
+      let bottle = new ThrowableObject( // erzeugt eine neue Flasche
         this.character.x + 60,
         this.character.y + 100
-      ); // erzeugt eine neue Flasche
+      ); 
       this.throwing_sound.play();
       this.throwableObjects.push(bottle);
       this.collectionBottles--;
@@ -83,17 +83,18 @@ class World {
     }, 10);
   }
 
-  // Character mit Enemy
+  
   checkCollisions() {
-   /* this.level.enemies.forEach((enemy) => {
+    // Character mit Enemy
+      this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy); // StatusBar Health wird aktualisiert wenn Character getroffen wird
       }
-    });*/
+    });
 
     // Endboss mit ThrowableObject(Bottle)
-    this.throwableObjects.forEach((throwableObject, index) => {
+    this.throwableObjects.forEach((throwableObject) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
         this.endboss.hit(); // Energy wird weniger
@@ -106,7 +107,7 @@ class World {
       for (let index = 0; index < this.level.enemies.length; index++) {
         const enemy = this.level.enemies[index];
         if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
-          throwableObject.hitted();
+          throwableObject.hitted(); // Flasche zerplatzt
           this.level.enemies.splice(index, 1);
         }
       }

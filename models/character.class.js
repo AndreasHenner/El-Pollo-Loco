@@ -61,7 +61,8 @@ class Character extends MovableObject {
   
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
- 
+  snoring_sound = new Audio("audio/snoring.mp3");
+
   constructor() {
     super().loadImg("img/2_character_pepe/2_walk/W-21.png"); // loadImg wird hier von der SuperKlasse aufgerufen
     this.loadImages(this.IMAGES_WALKING); // lädt Bilder für das Laufen
@@ -84,6 +85,7 @@ class Character extends MovableObject {
       if (!this.sleepTimeout) {
         this.sleepTimeout = setTimeout(() => {
           this.playAnimation(this.IMAGES_SLEEP);
+          this.snoring_sound.play();
         }, 2000);
         
         this.walking_sound.pause();
@@ -137,6 +139,7 @@ class Character extends MovableObject {
   stopSleeping() {
     clearTimeout(this.sleepTimeout);
     this.sleepTimeout = null;
+    this.snoring_sound.pause();
   }
 
   showLostScreen() {
