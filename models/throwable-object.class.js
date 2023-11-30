@@ -26,8 +26,7 @@ class ThrowableObject extends MovableObject {
     this.y = y;
     this.width = 70;
     this.height = 70;
-    this.throw();
-   
+    this.throw(); 
   }
 
   splashed = false;
@@ -44,9 +43,9 @@ class ThrowableObject extends MovableObject {
 
     setInterval(() => {
      
-      if (this.splashed) {
+      if (this.splashed || this.y > 310) {
         this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
-        this.splashing_sound.play();
+        /*this.splashing_sound.play();*/
       } else {
         this.playAnimation(this.IMAGES_THROWING);
       }

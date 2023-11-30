@@ -21,6 +21,7 @@ body::before {
 
 h1 {
     font-size: 48px;
+    margin-bottom: auto;
 }
 
 canvas{
@@ -94,4 +95,8 @@ canvas{
 .icon-fullscreen:hover {
     cursor: pointer;
     height: 35px;
+}
+
+.start-game {
+    position: absolute;
 }

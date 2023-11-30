@@ -25,6 +25,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
+ 
   }
 
   setWorld() {
@@ -83,7 +84,6 @@ class World {
     }, 10);
   }
 
-  
   checkCollisions() {
     // Character mit Enemy
       this.level.enemies.forEach((enemy) => {

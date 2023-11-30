@@ -16,6 +16,11 @@ class Character extends MovableObject {
     "img/2_character_pepe/2_walk/W-26.png",
   ];
 
+  IMAGES_STANDING = [
+    "img/2_character_pepe/1_idle/idle/I-1.png"
+  ];
+
+
   IMAGES_JUMPING = [
     "img/2_character_pepe/3_jump/J-31.png",
     "img/2_character_pepe/3_jump/J-32.png",
@@ -57,11 +62,10 @@ class Character extends MovableObject {
     "img/2_character_pepe/1_idle/long_idle/I-20.png"
   ];
 
-
-  
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
   snoring_sound = new Audio("audio/snoring.mp3");
+  sleepCounter = 0;
 
   constructor() {
     super().loadImg("img/2_character_pepe/2_walk/W-21.png"); // loadImg wird hier von der SuperKlasse aufgerufen
@@ -70,6 +74,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD); // lädt Bilder für das Sterben
     this.loadImages(this.IMAGES_HURT); // lädt Bilder für das Verletzen
     this.loadImages(this.IMAGES_SLEEP);
+    this.loadImages(this.IMAGES_STANDING);
     this.applyGravity();
     this.animate();
     this.moveRight();
@@ -79,8 +84,6 @@ class Character extends MovableObject {
   // lässt den Character bewegen
 
   animate() {
-    let setTimeoutSleep; // Variable im umfassenderen Bereich definieren
-  
     setInterval(() => {
       // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -111,38 +114,41 @@ class Character extends MovableObject {
         this.showLostScreen();
         this.stopSleeping();
       } 
+
       // Hurt-Animation
       else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
         this.stopSleeping();
-      } 
+      }
+
       // Jump-Animation
       else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
         this.stopSleeping();
       } 
+     
       // Walk-Animation
-      else {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          this.playAnimation(this.IMAGES_WALKING);
-          this.stopSleeping();
-        }
+      else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.stopSleeping();
       }
+      
       // Sleep-Animation
-      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
-        setTimeoutSleep = setTimeout(() => {
-          this.playAnimation(this.IMAGES_SLEEP);
-          /*this.snoring_sound.play();*/
-        }, 2000);
+      else {
         this.walking_sound.pause();
+      if (this.sleepCounter > 40) {
+        this.playAnimation(this.IMAGES_SLEEP);
+        this.snoring_sound.play();
+      } else {
+        this.sleepCounter++;
+        this.playAnimation(this.IMAGES_STANDING);
       }
+    }
     }, 75);
   }
 
-  // Stop-Sleeping-Funktion
   stopSleeping() {
-    clearTimeout(this.setTimeoutSleep);
-    this.setTimeoutSleep = null;
+    this.sleepCounter = 0;
     this.snoring_sound.pause();
   }
 
