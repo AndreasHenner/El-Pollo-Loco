@@ -73,8 +73,8 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_JUMPING); // lädt Bilder für das Springen
     this.loadImages(this.IMAGES_DEAD); // lädt Bilder für das Sterben
     this.loadImages(this.IMAGES_HURT); // lädt Bilder für das Verletzen
-    this.loadImages(this.IMAGES_SLEEP);
-    this.loadImages(this.IMAGES_STANDING);
+    this.loadImages(this.IMAGES_SLEEP); // Bilder für das Schlafen
+    this.loadImages(this.IMAGES_STANDING); // Bilder für das Stehen
     this.applyGravity();
     this.animate();
     this.moveRight();

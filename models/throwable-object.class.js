@@ -16,7 +16,7 @@ class ThrowableObject extends MovableObject {
   ];
 
   splashing_sound = new Audio("audio/splash.mp3");
-  
+  throwing_sound = new Audio("audio/throw.mp3");
 
   constructor(x, y) {
     super().loadImg("img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png");
@@ -35,22 +35,24 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 15; // Weite des Wurfes
     this.applyGravity(); // Flasche fällt
-   
-   
+    this.throwing_sound.play();
+  
     setInterval(() => {
-      this.x += 10; //Schnelligkeit des Wurfes
+      this.x += 10; //Schnelligkeit der Flasche beim werfen
     }, 25);
 
     setInterval(() => {
-     
+       // Flasche zerbricht wenn sie aufkommt
       if (this.splashed || this.y > 310) {
-        this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
-        /*this.splashing_sound.play();*/
+        if (!this.splashingSoundPlayed) {
+          this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
+          this.splashing_sound.play();
+          this.splashingSoundPlayed = true;
+        }
       } else {
         this.playAnimation(this.IMAGES_THROWING);
       }
     }, 100);
-        this.splashing_sound.pause();
   }
  
   hitted() {
