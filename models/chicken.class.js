@@ -3,7 +3,7 @@ class Chicken extends MovableObject {
 
   height = 55;
   width = 55;
-  y = 365;
+  y = 375;
   
   IMAGES_WALKING = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -32,8 +32,11 @@ class Chicken extends MovableObject {
   
     // Animation
     setInterval(() => {
-      if (this.splashed) {
+      if (this.dead) {
         this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+          this.IMAGES_DEAD.splice(1);
+        }, 2000);
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }

@@ -12,9 +12,9 @@ class World {
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
- 
   throwableObjects = [];
   endboss = new Endboss();
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -85,11 +85,22 @@ class World {
 
   checkCollisions() {
     // Character mit Enemy
-      this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBarHealth.setPercentage(this.character.energy); // StatusBar Health wird aktualisiert wenn Character getroffen wird
-      }
+    let wasInTheAir = this.character.inTheAir;
+    let dead = false;
+    this.level.enemies.forEach((enemy, index) => {
+        if (this.character.isColliding(enemy) && !this.character.inTheAir) {
+            // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
+            this.character.hit();
+            this.statusBarHealth.setPercentage(this.character.energy);
+            wasInTheAir = false; // Charakter ist nicht mehr in der Luft
+        } else if (wasInTheAir && this.character.isColliding(enemy)) {
+            // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert 
+            this.level.enemies[index].dead = true; // Enemy ist tot
+            setTimeout(() => {
+              this.level.enemies.splice(index, 1);
+            }, 400);
+            wasInTheAir = false; // Reset für den nächsten Durchlauf
+        }
     });
 
     // Endboss mit ThrowableObject(Bottle)
@@ -159,7 +170,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    /*mo.drawFrame(this.ctx);*/
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

@@ -1,13 +1,13 @@
 const level1 = new Level(
   [
-   /*new Chicken(), 
+   new Chicken(), 
    new Chicken(), 
    new Chicken(), 
    new Chicken(), 
    new Chicken(), 
    new ChickenSmall(),
    new ChickenSmall(),
-   new ChickenSmall()*/
+   new ChickenSmall()
   ],
 
   [
@@ -70,10 +70,6 @@ const level1 = new Level(
   ],
 
   [
-    new Bottles(),
-    new Bottles(),
-    new Bottles(),
-    new Bottles(),
     new Bottles(),
     new Bottles(),
     new Bottles(),

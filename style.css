@@ -19,6 +19,14 @@ body::before {
     z-index: -1; 
   }
 
+  .start-img {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
 h1 {
     font-size: 48px;
     margin-bottom: auto;
@@ -97,6 +105,20 @@ canvas{
     height: 35px;
 }
 
-.start-game {
+.start-game-button {
     position: absolute;
+    z-index: 200;
+    border: none;
+    font-size: 20px;
+    border-radius: 15px;
+    color: white;
+    padding: 25px;
+    background-color: orange;
+    left: 20px;
+    top: 642px;
+}
+
+.start-game-button:hover {
+    cursor: pointer;
+    background-color: #d4a753;
 }

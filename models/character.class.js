@@ -82,8 +82,8 @@ class Character extends MovableObject {
   }
 
   // lässt den Character bewegen
-
   animate() {
+  
     setInterval(() => {
       // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -101,6 +101,11 @@ class Character extends MovableObject {
   
       // Jump
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.inTheAir = true; // Character ist in der Luft
+    
+        setTimeout(() => {
+          this.inTheAir = false; // Character ist wieder gelandet
+        }, 1500);
         this.jump();
       }
   

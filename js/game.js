@@ -11,6 +11,11 @@ function init() {
 
 function startGame() {
   this.background_sound.play();
+  let startImg = document.getElementById('startImg');
+  let startGameButton = document.getElementById('startGameButton');
+  startGameButton.classList.add('d-none');
+  startImg.classList.add('d-none');
+  
 }
 
 // wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
