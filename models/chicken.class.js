@@ -17,7 +17,7 @@ class Chicken extends MovableObject {
 
   constructor() {
     super().loadImg("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"); // loadImg wird hier von der SuperKlasse aufgerufen
-    this.x = 200 + Math.random() * 3500; // die Chicken starten immer an einem zufälligem Startpunkt
+    this.x = 400 + Math.random() * 3500; // die Chicken starten immer an einem zufälligem Startpunkt
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
     this.speed = 0.15 + Math.random() * 0.5; // 0.15 ist Minimalspeed * 0.5 wird zufällig für jedes Element einzeln dazuaddiert

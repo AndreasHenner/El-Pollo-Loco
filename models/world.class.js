@@ -25,7 +25,6 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
- 
   }
 
   setWorld() {

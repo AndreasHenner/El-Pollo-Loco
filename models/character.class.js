@@ -3,7 +3,7 @@ class Character extends MovableObject {
 
   height = 300;
   width = 120;
-  y = 30;
+  y = 20;
   speed = 15;
   
 
@@ -78,7 +78,7 @@ class Character extends MovableObject {
     this.applyGravity();
     this.animate();
     this.moveRight();
-    this.jump();
+   
   }
 
   // lässt den Character bewegen

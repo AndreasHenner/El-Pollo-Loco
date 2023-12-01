@@ -106,7 +106,7 @@ canvas{
 }
 
 .start-game-button {
-    position: absolute;
+    position: fixed;
     z-index: 200;
     border: none;
     font-size: 20px;
@@ -114,8 +114,17 @@ canvas{
     color: white;
     padding: 25px;
     background-color: orange;
-    left: 20px;
-    top: 642px;
+    right: 113px;
+    top: 20px;
+}
+.restart-game-button {
+    border: none;
+    font-size: 20px;
+    border-radius: 15px;
+    color: black;
+    padding: 12px;
+    background-color: rgb(240, 215, 169);
+    margin-left: 250px;
 }
 
 .start-game-button:hover {

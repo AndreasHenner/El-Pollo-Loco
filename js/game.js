@@ -7,16 +7,14 @@ background_sound.volume = 0.3 // Lautstärke der Hintergrundmusik
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
-}
-
-function startGame() {
   this.background_sound.play();
   let startImg = document.getElementById('startImg');
   let startGameButton = document.getElementById('startGameButton');
   startGameButton.classList.add('d-none');
   startImg.classList.add('d-none');
-  
 }
+
+
 
 // wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
 window.addEventListener('keydown', (e) => {
