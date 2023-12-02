@@ -13,6 +13,9 @@ class World {
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
   landing_sound = new Audio("audio/landing.mp3");
+  danger_sound = new Audio("audio/danger.mp3");
+  background_sound = new Audio("audio/backgroundMusic.mp3");
+ 
   throwableObjects = [];
   endboss = new Endboss();
 
@@ -26,6 +29,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
+    this.background_sound.play();
   }
 
   setWorld() {
@@ -109,8 +113,14 @@ class World {
     this.throwableObjects.forEach((throwableObject) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
+        this.danger_sound.play();
+        this.background_sound.pause();
         this.endboss.hit(); // Energy wird weniger
         this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
+    // Endboss besiegt, Spiel zu Ende
+        if (this.endboss.isDead()) {
+          this.danger_sound.pause();
+        }
       }
     });
 

@@ -65,6 +65,7 @@ class Character extends MovableObject {
   world; //Variable aus der Klasse world
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
   snoring_sound = new Audio("audio/snoring.mp3");
+  inTheAir_sound = new Audio("audio/inTheAir.mp3");
   sleepCounter = 0;
 
   constructor() {
@@ -102,7 +103,7 @@ class Character extends MovableObject {
       // Jump
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.inTheAir = true; // Character ist in der Luft
-    
+        this.inTheAir_sound.play();
         setTimeout(() => {
           this.inTheAir = false; // Character ist wieder gelandet
         }, 1500);
