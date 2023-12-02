@@ -12,6 +12,7 @@ class World {
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
+  landing_sound = new Audio("audio/landing.mp3");
   throwableObjects = [];
   endboss = new Endboss();
 
@@ -85,16 +86,18 @@ class World {
   checkCollisions() {
     // Character mit Enemy
     let wasInTheAir = this.character.inTheAir;
-    let dead = false;
+   
     this.level.enemies.forEach((enemy, index) => {
+       // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
         if (this.character.isColliding(enemy) && !this.character.inTheAir) {
-            // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
             this.character.hit();
             this.statusBarHealth.setPercentage(this.character.energy);
             wasInTheAir = false; // Charakter ist nicht mehr in der Luft
+            
+       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert 
         } else if (wasInTheAir && this.character.isColliding(enemy)) {
-            // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert 
             this.level.enemies[index].dead = true; // Enemy ist tot
+            this.landing_sound.play();
             setTimeout(() => {
               this.level.enemies.splice(index, 1);
             }, 400);
