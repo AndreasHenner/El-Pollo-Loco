@@ -15,7 +15,6 @@ class World {
   landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
   background_sound = new Audio("audio/backgroundMusic.mp3");
- 
   throwableObjects = [];
   endboss = new Endboss();
 
@@ -29,7 +28,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    this.background_sound.play();
+    /*this.background_sound.play();*/
   }
 
   setWorld() {
@@ -153,7 +152,7 @@ class World {
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
     this.addObjectsToMap(this.level.bottles); // Bottles werden zur Map hinzugefügt
     this.addObjectsToMap(this.throwableObjects); // ThrowableObjekt wird zur Map hinzugefügt
-
+  
     this.ctx.translate(-this.camera_x, 0); // Verschieben des Hintergrundes rückgängig machen
 
     //Koordinaten sind nicht fix und gehen mit der Kamera mit

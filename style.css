@@ -1,133 +1,204 @@
-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: math;
-   
+@font-face {
+  font-family: "zabars";
+  src: url("fonts/zabars.ttf") format("truetype");
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "zabars", Arial, Helvetica, sans-serif;
+  letter-spacing: 3px;
 }
 
 body::before {
-    content: "";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('img/5_background/second_half_background.png');
-    opacity: 0.6; /* Dunkelheit des Hintergrundbildes */
-    z-index: -1; 
-  }
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("img/9_intro_outro_screens/start/desert.png");
+  background-position: center;
+  z-index: -1;
+}
 
-  .start-img {
-    z-index: 100;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-  }
+.start-img {
+  z-index: 100;
+  position: absolute;
+  top: 128px;
+  width: 720px;
+  aspect-ratio: 720/480;
+}
 
 h1 {
-    font-size: 48px;
-    margin-bottom: auto;
+  font-size: 72px;
+  margin-bottom: auto;
+  text-shadow: 2px 2px red;
 }
 
-canvas{
-    background-color: black;
+canvas {
+  background-color: black;
 }
 
-.counter-of-bottles{
-    margin-top: -390px;
-    margin-left: -298px;
-    font-size: 38px;
+.counter-of-bottles {
+  margin-top: -380px;
+  margin-left: -298px;
+  font-size: 38px;
 }
 
-.counter-of-coins{
-    margin-top: -74px;
-    margin-left: -166px;
-    font-size: 38px;
+.counter-of-coins {
+  margin-top: -70px;
+  margin-left: -166px;
+  font-size: 38px;
 }
 
-.endboss-statusbar-icon{
-    width: 60px;
-    margin-top: -466px;
-    position: absolute;
-    margin-left: 128px;
+.endboss-statusbar-icon {
+  width: 60px;
+  margin-top: -466px;
+  position: absolute;
+  margin-left: 128px;
 }
 
 .lost-screen {
-   height: 480px;
-   width: 720px;
-   margin-top: -480px;
-   position: absolute;
-   margin-left: -360px;
+  height: 480px;
+  width: 720px;
+  margin-top: -480px;
+  position: absolute;
+  margin-left: -360px;
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .game-instruction {
-    gap: 24px;
-    display: flex;
-    align-items: center;
-    width: 720px;
-    background-color: orange;
-    justify-content: center;
+  gap: 24px;
+  display: flex;
+  align-items: center;
+  width: 720px;
+  background-color: orange;
+  justify-content: center;
 }
 
 .game-instruction img {
-    height: 40px;
-    margin-left: -20px;
+  height: 40px;
+  margin-left: -20px;
 }
 
 .space-bar {
-    width: 110px;
+  width: 110px;
 }
 
 .icon-fullscreen-area {
-    gap: 10px;
-    align-items: center;
-    display: flex;
-    background-color: orange;
-    justify-content: center;
-    width: 720px;
-    border-bottom-left-radius: 65px;
-    border-bottom-right-radius: 65px;
+  gap: 10px;
+  align-items: center;
+  display: flex;
+  background-color: orange;
+  justify-content: center;
+  width: 720px;
+  border-bottom-left-radius: 65px;
+  border-bottom-right-radius: 65px;
 }
 
 .icon-fullscreen {
-    height: 30px;
+  height: 30px;
 }
 
 .icon-fullscreen:hover {
-    cursor: pointer;
-    height: 35px;
+  cursor: pointer;
+  height: 35px;
 }
 
 .start-game-button {
-    position: fixed;
-    z-index: 200;
-    border: none;
-    font-size: 20px;
-    border-radius: 15px;
-    color: white;
-    padding: 25px;
-    background-color: orange;
-    right: 113px;
-    top: 20px;
+  position: relative;
+  z-index: 200;
+  border: none;
+  font-size: 20px;
+  border-radius: 15px;
+  color: black;
+  padding: 25px;
+  background-color: orange;
+  right: -245px;
+  top: -465px;
+  font-family: "zabars", Arial, Helvetica, sans-serif;
+  font-size: 48px;
 }
 .restart-game-button {
-    border: none;
-    font-size: 20px;
-    border-radius: 15px;
-    color: black;
-    padding: 12px;
-    background-color: rgb(240, 215, 169);
-    margin-left: 250px;
+  border: none;
+  font-size: 32px;
+  border-radius: 15px;
+  color: black;
+  padding: 12px;
+  background-color: #ea5f00;
+  margin-left: 250px;
+  font-family: "zabars", Arial, Helvetica, sans-serif;
+  margin-left: 50px;
 }
 
 .start-game-button:hover {
-    cursor: pointer;
-    background-color: #d4a753;
+  cursor: pointer;
+  background-color: #d4a753;
+}
+
+/* Responsive Smartphone */
+
+@media only screen and (max-width: 720px) {
+  canvas {
+    width: 100%;
+  }
+
+  #startImg {
+    width: 100%;
+    aspect-ratio: 720/480;
+    top: 0;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  .game-instruction {
+    display: none;
+  }
+
+  .icon-fullscreen-area {
+    display: none;
+  }
+
+ 
+}
+
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  .game-instruction {
+    display: none;
+  }
+
+  .icon-fullscreen-area {
+    display: none;
+  }
+
+  #counterBottles {
+    margin-top: -345px;
+    margin-left: -274px;
+  }
+
+  #counterCoins {
+    margin-top: -70px;
+    margin-left: -154px;
+  }
+
+  .endboss-statusbar-icon {
+    margin-top: -419px;
+    margin-left: 107px;
+  }
 }

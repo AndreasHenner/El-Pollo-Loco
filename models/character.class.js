@@ -79,13 +79,12 @@ class Character extends MovableObject {
     this.applyGravity();
     this.animate();
     this.moveRight();
-   
   }
 
   // lässt den Character bewegen
   animate() {
   
-    setInterval(() => {
+    const moving = setInterval(() => {
       // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
@@ -118,7 +117,8 @@ class Character extends MovableObject {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         this.showLostScreen();
-        this.stopSleeping();
+        clearInterval(moving);
+        this.walking_sound.pause();
       } 
 
       // Hurt-Animation

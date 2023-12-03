@@ -8,6 +8,7 @@ class Level {
   statusbarCoin;
   statusbarHealth;
   statusbarEndboss
+
   level_end_x = 4200; // Ende des Levels nach rechts
   
  
@@ -22,5 +23,6 @@ class Level {
     this.statusbarBottle = statusbarBottle;
     this.statusbarHealth = statusbarHealth;
     this.statusbarEndboss = statusbarEndboss;
+   
   }
 }
