@@ -16,8 +16,7 @@ class World {
   danger_sound = new Audio("audio/danger.mp3");
   background_sound = new Audio("audio/backgroundMusic.mp3");
   throwableObjects = [];
-  endboss = new Endboss();
-
+ 
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -33,7 +32,6 @@ class World {
 
   setWorld() {
     this.character.world = this; // world wird an den Character übergeben dass Character auf variablen von der world zugreifen kann
-    this.endboss.world = this;
   }
 
   run() {
@@ -46,10 +44,8 @@ class World {
   checkThrowObjects() {
     const counter = document.getElementById("counterBottles");
     if (this.keyboard.D && this.collectionBottles > 0) {
-      let bottle = new ThrowableObject( // erzeugt eine neue Flasche
-        this.character.x + 60,
-        this.character.y + 100
-      ); 
+      // erzeugt eine neue Flasche
+      let bottle = new ThrowableObject( this.character.x + 60, this.character.y + 100); 
       this.throwableObjects.push(bottle);
       this.collectionBottles--;
       counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
@@ -106,9 +102,11 @@ class World {
             }, 400);
             wasInTheAir = false; // Reset für den nächsten Durchlauf
         }
+        
     });
 
     // Endboss mit ThrowableObject(Bottle)
+    this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist das letzte Element im Array "enemies"
     this.throwableObjects.forEach((throwableObject) => {
       if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted();
@@ -116,10 +114,12 @@ class World {
         this.background_sound.pause();
         this.endboss.hit(); // Energy wird weniger
         this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
-    // Endboss besiegt, Spiel zu Ende
+    
+        // Endboss besiegt, Spiel zu Ende
         if (this.endboss.isDead()) {
           this.danger_sound.pause();
         }
+        
       }
     });
 
@@ -129,7 +129,10 @@ class World {
         const enemy = this.level.enemies[index];
         if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
           throwableObject.hitted(); // Flasche zerplatzt
-          this.level.enemies.splice(index, 1);
+          this.level.enemies[index].dead = true; // Enemy ist tot
+          setTimeout(() => {
+            this.level.enemies.splice(index, 1);
+          }, 400);
         }
       }
       if (throwableObject.deletable) {
@@ -146,7 +149,7 @@ class World {
     // fixe Koordinaten
     this.addObjectsToMap(this.level.backgroundObjects); // BackgroundObjects wird zur Map hinzugefügt
     this.addToMap(this.character); // der Character wird gezeichnet und im Canvas angezeigt
-    this.addToMap(this.endboss);
+   
     this.addObjectsToMap(this.level.enemies); // Enemies wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt

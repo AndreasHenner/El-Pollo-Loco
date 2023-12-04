@@ -84,7 +84,7 @@ class Character extends MovableObject {
   // lässt den Character bewegen
   animate() {
   
-    const moving = setInterval(() => {
+    const characterIsMovingIntervall = setInterval(() => {
       // Walk right
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
@@ -117,7 +117,7 @@ class Character extends MovableObject {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         this.showLostScreen();
-        clearInterval(moving);
+        clearInterval(characterIsMovingIntervall);
         this.walking_sound.pause();
       } 
 

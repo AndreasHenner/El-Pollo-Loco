@@ -62,11 +62,13 @@ canvas {
 }
 
 .lost-screen {
+  z-index: 100;
+  position: absolute;
+  top: 128px;
+  width: 100%;
+  aspect-ratio: 720/480;
   height: 480px;
   width: 720px;
-  margin-top: -480px;
-  position: absolute;
-  margin-left: -360px;
 }
 
 .d-none {
@@ -118,7 +120,7 @@ canvas {
   font-size: 20px;
   border-radius: 15px;
   color: black;
-  padding: 25px;
+  padding: 12px;
   background-color: orange;
   right: -245px;
   top: -465px;
@@ -167,12 +169,31 @@ canvas {
     display: none;
   }
 
+  #startGameButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .lost-screen {
+  z-index: 100;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  aspect-ratio: 720/480;
+  width: 100%;
+  height: auto;
+  }
  
 }
 
 @media only screen and (max-height: 480px) {
   canvas {
     height: 100vh;
+  }
+
+  .start-img {
+    top: 0;
   }
 
   h1 {
@@ -201,4 +222,6 @@ canvas {
     margin-top: -419px;
     margin-left: 107px;
   }
+
+ 
 }

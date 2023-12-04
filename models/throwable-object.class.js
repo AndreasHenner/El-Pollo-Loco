@@ -33,12 +33,12 @@ class ThrowableObject extends MovableObject {
   deletable = false;
 
   throw() {
-    this.speedY = 20; // Weite des Wurfes
+    this.speedY = 15; // Weite des Wurfes
     this.applyGravity(); // Flasche fällt
     this.throwing_sound.play();
   
     setInterval(() => {
-      this.x += 15; //Schnelligkeit der Flasche beim werfen
+      this.x += 10; //Schnelligkeit der Flasche beim werfen
     }, 25);
 
     setInterval(() => {
@@ -48,6 +48,10 @@ class ThrowableObject extends MovableObject {
           this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
           this.splashing_sound.play();
           this.splashingSoundPlayed = true;
+          if (this.isAboveGround()) {
+           clearInterval(this.applyGravity());
+          }
+         
         }
       } else {
         this.playAnimation(this.IMAGES_THROWING);

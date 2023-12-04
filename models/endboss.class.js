@@ -34,6 +34,8 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/5_dead/G26.png"
   ];
 
+  snoring_sound = new Audio("audio/snoring.mp3");
+
   constructor() {
     super().loadImg(this.IMAGES_ATTACK[0]); // 1. Bild im Array wird geladen
     this.loadImages(this.IMAGES_WALKING);
@@ -46,18 +48,18 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    const moveLeftIntervall = setInterval(() => {
+    const endbossMoveLeftIntervall = setInterval(() => {
       this.moveLeft();
     }, 1000 / 30);
 
     setInterval(() => {
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-        this.speed = 4;
+        this.speed = 3;
       } 
       else if(this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        clearInterval(moveLeftIntervall);
+        clearInterval(endbossMoveLeftIntervall);
         this.snoring_sound.pause();
       } 
       else {
@@ -65,8 +67,6 @@ class Endboss extends MovableObject {
         this.moveLeft();
       } 
     }, 325);
-
-  
   }
 }
 
