@@ -116,7 +116,7 @@ class Character extends MovableObject {
       // Dead-Animation
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        this.showLostScreen();
+        this.world.showLostScreen();
         clearInterval(characterIsMovingIntervall);
         this.walking_sound.pause();
       } 
@@ -158,16 +158,7 @@ class Character extends MovableObject {
     this.snoring_sound.pause();
   }
 
-  showLostScreen() {
-    let lostScreen = document.getElementById('lostScreen');
-    if (this.isDead()) {
-      // Der Charakter ist tot, zeige das Bild an
-      lostScreen.classList.remove('d-none');
-    } else {
-      // Der Charakter ist nicht tot, verstecke das Bild
-      lostScreen.classList.add('d-none');
-    }
-  }
+
 }
   
 

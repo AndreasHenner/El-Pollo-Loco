@@ -146,9 +146,31 @@ canvas {
 
 /* Responsive Smartphone */
 
+@media only screen and (max-width: 950px) {
+  .smartphone-button-area {
+    display: flex;
+    z-index: 999;
+    margin-top: -60px;
+  }
+}
+
+
+
 @media only screen and (max-width: 720px) {
   canvas {
     width: 100%;
+  }
+
+  .button-left-right {
+    margin-top: -31px;
+    margin-left: -100px;
+    left: -270px;
+    display: flex;
+  }
+
+  .button-jump-throw {
+    display: flex;
+    margin-top: -20px;
   }
 
   #startImg {
@@ -176,15 +198,14 @@ canvas {
   }
 
   .lost-screen {
-  z-index: 100;
-  position: absolute;
-  top: 0px;
-  left: 0;
-  aspect-ratio: 720/480;
-  width: 100%;
-  height: auto;
+    z-index: 100;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    aspect-ratio: 720/480;
+    width: 100%;
+    height: auto;
   }
- 
 }
 
 @media only screen and (max-height: 480px) {
@@ -222,6 +243,4 @@ canvas {
     margin-top: -419px;
     margin-left: 107px;
   }
-
- 
 }
