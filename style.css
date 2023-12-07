@@ -64,7 +64,7 @@ canvas {
 .lost-screen {
   z-index: 100;
   position: absolute;
-  top: 128px;
+  top: 127px;
   width: 100%;
   aspect-ratio: 720/480;
   height: 480px;
@@ -120,7 +120,6 @@ canvas {
   font-size: 20px;
   border-radius: 15px;
   color: black;
-  padding: 12px;
   background-color: orange;
   right: -245px;
   top: -465px;
@@ -144,15 +143,64 @@ canvas {
   background-color: #d4a753;
 }
 
+#btnLeft{
+ width: 35px;
+}
+
+#btnRight{
+  width: 35px;
+}
+
+#btnJump{
+  width: 35px;
+}
+
+#btnThrow{
+  width: 35px;
+}
+
+.button-left-right {
+  position: absolute;
+  left: 170px;
+}
+
+.button-jump-throw {
+  position: absolute;
+  right: 170px;
+}
+
 /* Responsive Smartphone */
 
-@media only screen and (max-width: 950px) and (orientation: landscape) {
+@media (max-width: 900px) and (orientation: landscape) {
+
+  body {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  #startImg {
+    height: 100vh;
+  }
+
   .smartphone-button-area {
     display: flex;
-    z-index: 999;
     margin-top: -40px;
   }
+
+  #startGameButton {
+    position: absolute;
+    right: 120px;
+    top: 20px;
+  }
+
+   .lost-screen {
+    z-index: 100;
+    top: 6px;
+    aspect-ratio: 720/480;
+    width: 644px;
+  }
 }
+
 
 @media only screen and (max-width: 720px) {
   canvas {
@@ -228,17 +276,18 @@ canvas {
   }
 
   #counterBottles {
-    margin-top: -345px;
-    margin-left: -274px;
+    margin-top: -320px;
+    margin-left: -247px;
   }
 
   #counterCoins {
-    margin-top: -70px;
-    margin-left: -154px;
+    margin-top: -71px;
+    margin-left: -135px;
   }
 
   .endboss-statusbar-icon {
-    margin-top: -419px;
-    margin-left: 107px;
+    width: 50px;
+    margin-top: -379px;
+    margin-left: 101px;
   }
 }

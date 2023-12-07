@@ -118,8 +118,7 @@ class World {
         // Endboss besiegt, Spiel zu Ende
         if (this.endboss.isDead()) {
           this.danger_sound.pause();
-        }
-        
+        }  
       }
     });
 
@@ -148,14 +147,14 @@ class World {
 
     // fixe Koordinaten
     this.addObjectsToMap(this.level.backgroundObjects); // BackgroundObjects wird zur Map hinzugefügt
-    this.addToMap(this.character); // der Character wird gezeichnet und im Canvas angezeigt
    
     this.addObjectsToMap(this.level.enemies); // Enemies wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
     this.addObjectsToMap(this.level.bottles); // Bottles werden zur Map hinzugefügt
     this.addObjectsToMap(this.throwableObjects); // ThrowableObjekt wird zur Map hinzugefügt
-  
+    this.addToMap(this.character); // der Character wird gezeichnet und im Canvas angezeigt
+
     this.ctx.translate(-this.camera_x, 0); // Verschieben des Hintergrundes rückgängig machen
 
     //Koordinaten sind nicht fix und gehen mit der Kamera mit
@@ -184,7 +183,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    /*mo.drawFrame(this.ctx);*/
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

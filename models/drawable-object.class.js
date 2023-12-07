@@ -22,7 +22,6 @@ class DrawableObject {
         // fügt Rahmen hinzu
   drawFrame(ctx) {
     if (this instanceof Character || this instanceof Chicken || this instanceof Bottles || this instanceof Coins || this instanceof Endboss) {
-      // nur bei Character und Chicken wird der Rahmen gezeichnet
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
