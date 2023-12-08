@@ -16,7 +16,6 @@ class World {
   danger_sound = new Audio("audio/danger.mp3");
   background_sound = new Audio("audio/backgroundMusic.mp3");
   throwableObjects = [];
- 
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -41,85 +40,70 @@ class World {
     }, 200);
   }
 
+  // erzeugt eine neue Flasche
   checkThrowObjects() {
-    const counter = document.getElementById("counterBottles");
+   
     if (this.keyboard.D && this.collectionBottles > 0) {
-      // erzeugt eine neue Flasche
-      let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 150, this.character.otherDirection); 
-      this.throwableObjects.push(bottle);
-      this.collectionBottles--;
-      counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
+      this.generateNewBottle();
     }
   }
 
-  // Flaschen sammeln und anzeigen
-  showCollectedBottles() {
+  generateNewBottle() {
     const counter = document.getElementById("counterBottles");
+    let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 150, this.character.otherDirection);
+    this.throwableObjects.push(bottle);
+    this.collectionBottles--;
+    counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
+  }
+
+  // Flaschen anzeigen
+  showCollectedBottles() {
     setInterval(() => {
       this.level.bottles.forEach((bottle, index) => {
         if (this.character.isColliding(bottle)) {
-          this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
-          this.collectionBottles++; // Collection Flaschen wird erhöht wenn eingesammelt
-          counter.innerHTML = this.collectionBottles; // Der Counter Flaschen zeigt die Collection an
-          this.collecting_sound.play();
+          this.collectBottles(index);
         }
       });
     }, 10);
   }
 
-  // Coins sammeln und anzeigen
+  // Flaschen sammeln
+  collectBottles(index) {
+    const counter = document.getElementById("counterBottles");
+    this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
+    this.collectionBottles++; // Collection Flaschen wird erhöht wenn eingesammelt
+    counter.innerHTML = this.collectionBottles; // Der Counter Flaschen zeigt die Collection an
+    this.collecting_sound.play();
+  }
+
+  // Coins anzeigen
   showCollectedCoins() {
-    const counter = document.getElementById("counterCoins");
     setInterval(() => {
       this.level.coins.forEach((coin, index) => {
         if (this.character.isColliding(coin)) {
-          this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
-          this.collectionCoins++; // Collection Flaschen wird erhöht wenn eingesammelt
-          counter.innerHTML = this.collectionCoins; // Der Counter Flaschen zeigt die Collection an
-          this.collecting_sound.play();
+          this.collectCoins(index);
         }
       });
     }, 10);
+  }
+
+  // Coins sammeln
+  collectCoins(index) {
+    const counter = document.getElementById("counterCoins");
+    this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
+    this.collectionCoins++; // Collection Flaschen wird erhöht wenn eingesammelt
+    counter.innerHTML = this.collectionCoins; // Der Counter Flaschen zeigt die Collection an
+    this.collecting_sound.play();
   }
 
   checkCollisions() {
     // Character mit Enemy
-    let wasInTheAir = this.character.inTheAir;
-   
-    this.level.enemies.forEach((enemy, index) => {
-       // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
-        if (this.character.isColliding(enemy) && !this.character.inTheAir) {
-            this.character.hit();
-            this.statusBarHealth.setPercentage(this.character.energy);
-            wasInTheAir = false; // Charakter ist nicht mehr in der Luft
-            
-       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert 
-        } else if (wasInTheAir && this.character.isColliding(enemy)) {
-            this.level.enemies[index].dead = true; // Enemy ist tot
-            this.landing_sound.play();
-            setTimeout(() => {
-              this.level.enemies.splice(index, 1);
-            }, 400);
-            wasInTheAir = false; // Reset für den nächsten Durchlauf
-        }
-        
-    });
+    this.level.enemies.forEach((enemy, index) => this.characterMeetsChicken(enemy, index), );
 
     // Endboss mit ThrowableObject(Bottle)
     this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist das letzte Element im Array "enemies"
     this.throwableObjects.forEach((throwableObject) => {
-      if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
-        throwableObject.hitted();
-        this.danger_sound.play();
-        this.background_sound.pause();
-        this.endboss.hit(); // Energy wird weniger
-        this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
-    
-        // Endboss besiegt, Spiel zu Ende
-        if (this.endboss.isDead()) {
-          this.danger_sound.pause();
-        }  
-      }
+    this.bottleMeetsEndboss(throwableObject);
     });
 
     // Enemies mit ThrowableObject(Bottle)
@@ -140,6 +124,52 @@ class World {
     });
   }
 
+  characterWasHit() {
+    let wasInTheAir = this.character.inTheAir;
+    this.character.hit();
+    this.statusBarHealth.setPercentage(this.character.energy);
+    wasInTheAir = false; // Charakter ist nicht mehr in der Luft
+  }
+
+  jumpedOnChicken(index) {
+    let wasInTheAir = this.character.inTheAir;
+    this.level.enemies[index].dead = true; // Enemy ist tot
+    this.landing_sound.play();
+    setTimeout(() => {
+      this.level.enemies.splice(index, 1);
+    }, 400);
+    wasInTheAir = false; // Reset für den nächsten Durchlauf
+  }
+
+  characterMeetsChicken(enemy, index) {
+    let wasInTheAir = this.character.inTheAir;
+    // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
+    if (this.character.isColliding(enemy) && !this.character.inTheAir) {
+      this.characterWasHit();
+      // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
+    } else if (wasInTheAir && this.character.isColliding(enemy)) {
+      this.jumpedOnChicken(index);
+    }
+  }
+
+  bottleHittedEndboss(throwableObject) {
+    throwableObject.hitted();
+    this.danger_sound.play();
+    this.background_sound.pause();
+    this.endboss.hit(); // Energy wird weniger
+    this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
+  }
+
+  bottleMeetsEndboss(throwableObject) {
+    if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
+      this.bottleHittedEndboss(throwableObject);
+      // Endboss besiegt, Spiel zu Ende
+      if (this.endboss.isDead()) {
+        this.danger_sound.pause();
+      }
+    }
+  }
+
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // Canvas wird gelöscht
 
@@ -147,7 +177,7 @@ class World {
 
     // fixe Koordinaten
     this.addObjectsToMap(this.level.backgroundObjects); // BackgroundObjects wird zur Map hinzugefügt
-   
+
     this.addObjectsToMap(this.level.enemies); // Enemies wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
     this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
@@ -183,7 +213,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    /*mo.drawFrame(this.ctx);*/
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -203,13 +233,13 @@ class World {
   }
 
   showLostScreen() {
-    let lostScreen = document.getElementById('lostScreen');
+    let lostScreen = document.getElementById("lostScreen");
     if (this.character.isDead()) {
       // Der Charakter ist tot, zeige das Bild an
-      lostScreen.classList.remove('d-none');
+      lostScreen.classList.remove("d-none");
     } else {
       // Der Charakter ist nicht tot, verstecke das Bild
-      lostScreen.classList.add('d-none');
+      lostScreen.classList.add("d-none");
     }
   }
 }

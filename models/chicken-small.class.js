@@ -24,18 +24,17 @@ class ChickenSmall extends MovableObject { // Chicken hat alle Eigenschaften von
     }
     
     animate() {
-      setInterval(() => {
-        this.moveLeft();
-        this.otherDirection = false;
-      }, 1000 / 50);
-      
+      setInterval(() => this.moveLeft(), 1000 / 50);
+
       setInterval(() => {
         this.playAnimation(this.IMAGES_WALKING);
-
-        if (this.dead || this.splashed) {
-          this.playAnimation(this.IMAGES_DEAD);
-        }
+        if (this.dead || this.splashed) this.playAnimation(this.IMAGES_DEAD);
       }, 100);
+    }
+
+    moveLeft() {
+      super.moveLeft(); // moveLeft() von movableObject wird ausgeführt
+      this.otherDirection = false;
     }
   }
    

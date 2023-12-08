@@ -69,12 +69,16 @@ canvas {
   margin-top: -380px;
   margin-left: -298px;
   font-size: 38px;
+
+  position: absolute;
 }
 
 .counter-of-coins {
-  margin-top: -70px;
+  margin-top: -380px;
   margin-left: -166px;
   font-size: 38px;
+ 
+  position: absolute;
 }
 
 .endboss-statusbar-icon {
@@ -105,6 +109,11 @@ canvas {
   width: 720px;
   background-color: orange;
   justify-content: center;
+ 
+}
+
+.counterArea {
+  height: 0;
 }
 
 .game-instruction img {
@@ -180,6 +189,10 @@ canvas {
 
 #btnThrow{
   width: 35px;
+  background-color: rgba(155, 197, 247);
+  border-radius: 20px;
+  border: none;
+  margin-left: 5px;
 }
 
 .button-left-right {
@@ -189,6 +202,7 @@ canvas {
 
 .button-jump-throw {
   position: absolute;
+  display: flex;
   right: 170px;
 }
 
@@ -304,7 +318,7 @@ canvas {
   }
 
   #counterCoins {
-    margin-top: -71px;
+    margin-top: -320px;
     margin-left: -135px;
   }
 

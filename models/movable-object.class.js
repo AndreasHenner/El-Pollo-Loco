@@ -14,16 +14,17 @@ class MovableObject extends DrawableObject {
     bottom: 0
   };
 
-
-
   applyGravity() {
-   const gravity = setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0) {
-        // kommt von der Funktion isAboveGround = this.y < 130
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration; //speedY wird von acceleration abgezogen
+   setInterval(() => {
+      if (this.isAboveGround() || this.speedY > 0) { // kommt von der Funktion isAboveGround = this.y < 130
+      this.letGrafity();
       }
     }, 1000 / 25); // 25x pro Sekunde
+  }
+
+  letGrafity() {
+    this.y -= this.speedY;
+    this.speedY -= this.acceleration; //speedY wird von acceleration abgezogen
   }
 
   isAboveGround() {

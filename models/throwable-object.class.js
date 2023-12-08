@@ -38,32 +38,33 @@ class ThrowableObject extends MovableObject {
     this.speedY = 30; // Höhe des Wurfes
     this.applyGravity(); // Flasche fällt
     this.throwing_sound.play();
-
     setInterval(() => {
-      //Linkswurf
       if (this.direction) {
         this.x -= 15; // Wurf nach links
       } else {
-      //Rechtswurf
         this.x += 15; // Wurf nach links
       }
     }, 25);
+     // Flasche zerbricht wenn sie aufkommt
+    setInterval(() => this.bottleCanSplash(),  100);}
 
-    setInterval(() => {
-      // Flasche zerbricht wenn sie aufkommt
-      if (this.splashed || this.y > 310) {
-        if (!this.splashingSoundPlayed) {
-          this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
-          this.splashing_sound.play();
-          this.splashingSoundPlayed = true;
-          if (this.isAboveGround()) {
-            clearInterval(this.applyGravity());
-          }
+  bottleCanSplash() {
+    if (this.splashed || this.y > 310) {
+      if (!this.splashingSoundPlayed) {
+      this.playSplashAnimation();
+        if (this.isAboveGround()) {
+          clearInterval(this.applyGravity());
         }
-      } else {
-        this.playAnimation(this.IMAGES_THROWING);
       }
-    }, 100);
+    } else {
+      this.playAnimation(this.IMAGES_THROWING);
+    }
+  }
+
+  playSplashAnimation() {
+    this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
+    this.splashing_sound.play();
+    this.splashingSoundPlayed = true;
   }
 
   hitted() {

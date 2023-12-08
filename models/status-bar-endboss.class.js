@@ -20,7 +20,6 @@ class StatusbarEndboss extends MovableObject {
       this.width = 200;
       this.height = 60;
       this.setPercentage(100);
-   
     }
   
     setPercentage(percentage) {

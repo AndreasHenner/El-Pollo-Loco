@@ -2,7 +2,6 @@ let canvas; // ist der Hintergrund des Spiels, ein Container mit Breite und Höh
 let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
 
-
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
@@ -17,13 +16,12 @@ function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-
 // Bedienung für Smartphone
 
 // TouchStart
 window.addEventListener("touchstart", (e) => {
-  const btnLeft = document.getElementById('btnLeft');
-  const btnRight = document.getElementById('btnRight');
+  const btnLeft = document.getElementById("btnLeft");
+  const btnRight = document.getElementById("btnRight");
 
   if (e.target === btnLeft) {
     keyboard.LEFT = true;
@@ -38,8 +36,8 @@ window.addEventListener("touchstart", (e) => {
 
 //TouchEnd
 window.addEventListener("touchend", (e) => {
-  const btnLeft = document.getElementById('btnLeft');
-  const btnRight = document.getElementById('btnRight');
+  const btnLeft = document.getElementById("btnLeft");
+  const btnRight = document.getElementById("btnRight");
 
   if (e.target === btnLeft) {
     keyboard.LEFT = false;
@@ -51,7 +49,6 @@ window.addEventListener("touchend", (e) => {
     keyboard.D = false;
   }
 });
-
 
 // wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
 window.addEventListener("keydown", (e) => {
@@ -116,12 +113,10 @@ function showFullscreen() {
   canvas.requestFullscreen();
 }
 
-
-
 function leaveFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
-}
-let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
-buttonExitFullscreen.classList.add("d-none");
+  }
+  let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
+  buttonExitFullscreen.classList.add("d-none");
 }

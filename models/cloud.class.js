@@ -8,15 +8,12 @@ class Cloud extends MovableObject {
   constructor(imagePath, x) {
     super().loadImg(imagePath); // loadImg wird hier von der SuperKlasse aufgerufen
     this.x = x;
-    
     this.animate(); // die Function animate wird aufgerufen
   }
-
 
   animate() {
     setInterval(() => {
       this.moveLeft();
     }, 1000 / 80);
   }
-
 }

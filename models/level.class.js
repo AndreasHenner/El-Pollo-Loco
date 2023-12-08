@@ -8,10 +8,8 @@ class Level {
   statusbarCoin;
   statusbarHealth;
   statusbarEndboss
-
   level_end_x = 4200; // Ende des Levels nach rechts
   
- 
 
   constructor(enemies, clouds, backgroundObjects, coins, bottles, statusbarCoin, statusbarBottle, statusbarHealth, statusbarEndboss) {
     this.enemies = enemies;
@@ -23,6 +21,5 @@ class Level {
     this.statusbarBottle = statusbarBottle;
     this.statusbarHealth = statusbarHealth;
     this.statusbarEndboss = statusbarEndboss;
-   
   }
 }
