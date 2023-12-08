@@ -42,6 +42,29 @@ canvas {
   background-color: black;
 }
 
+.canvas-div {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.button-exit-fullscreen {
+  position: absolute;
+  height: 20px;
+  margin-right: -1200px;
+  margin-top: 20px;
+  z-index: 999;
+  border: none;
+  font-size: 20px;
+  border-radius: 10px;
+  color: black;
+  padding: 12px;
+  background-color: #ea5f00;
+  display: flex;
+  align-items: center;
+  font-family: "zabars", Arial, Helvetica, sans-serif;
+}
+
 .counter-of-bottles {
   margin-top: -380px;
   margin-left: -298px;

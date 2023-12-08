@@ -2,15 +2,21 @@ let canvas; // ist der Hintergrund des Spiels, ein Container mit Breite und Höh
 let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
 
+
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
-
   let startImg = document.getElementById("startImg");
   let startGameButton = document.getElementById("startGameButton");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
 }
+
+// beendet alle Intervalle
+function clearAllIntervals() {
+  for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
 
 // Bedienung für Smartphone
 
@@ -104,6 +110,18 @@ window.addEventListener("keyup", (e) => {
 });
 
 function showFullscreen() {
-  let canvas = document.getElementById("canvas");
+  let canvas = document.getElementById("canvasDiv");
+  let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
+  buttonExitFullscreen.classList.remove("d-none");
   canvas.requestFullscreen();
+}
+
+
+
+function leaveFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+}
+let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
+buttonExitFullscreen.classList.add("d-none");
 }

@@ -27,7 +27,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    /*this.background_sound.play();*/
+    this.background_sound.play();
   }
 
   setWorld() {

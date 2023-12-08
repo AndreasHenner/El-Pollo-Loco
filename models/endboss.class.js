@@ -48,7 +48,7 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    const endbossMoveLeftIntervall = setInterval(() => {
+    setInterval(() => {
       this.moveLeft();
     }, 1000 / 30);
 
@@ -59,7 +59,7 @@ class Endboss extends MovableObject {
       } 
       else if(this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        clearInterval(endbossMoveLeftIntervall);
+        clearAllIntervals();
         this.snoring_sound.pause();
       } 
       else {
