@@ -14,8 +14,9 @@ class World {
   collecting_sound = new Audio("audio/collect.mp3");
   landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
-  background_sound = new Audio("audio/backgroundMusic.mp3");
+ 
   throwableObjects = [];
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -26,7 +27,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    this.background_sound.play();
+   
   }
 
   setWorld() {
@@ -98,74 +99,76 @@ class World {
 
   checkCollisions() {
     // Character mit Enemy
-    this.level.enemies.forEach((enemy, index) => this.characterMeetsChicken(enemy, index), );
-
+    this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index), );
     // Endboss mit ThrowableObject(Bottle)
     this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist das letzte Element im Array "enemies"
-    this.throwableObjects.forEach((throwableObject) => {
-    this.bottleMeetsEndboss(throwableObject);
-    });
-
+    this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject),);
     // Enemies mit ThrowableObject(Bottle)
-    this.throwableObjects.forEach((throwableObject, index) => {
-      for (let index = 0; index < this.level.enemies.length; index++) {
-        const enemy = this.level.enemies[index];
-        if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
-          throwableObject.hitted(); // Flasche zerplatzt
-          this.level.enemies[index].dead = true; // Enemy ist tot
-          setTimeout(() => {
-            this.level.enemies.splice(index, 1);
-          }, 400);
-        }
-      }
+    this.throwableObjects.forEach((throwableObject, index) => { this.bottleKillsChicken(throwableObject);
       if (throwableObject.deletable) {
         this.throwableObjects.splice(index, 1);
       }
     });
   }
 
+  bottleKillsChicken(throwableObject) {
+    for (let index = 0; index < this.level.enemies.length; index++) {
+      const enemy = this.level.enemies[index];
+      if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
+        throwableObject.hitted(); // Flasche zerplatzt
+        this.level.enemies[index].dead = true; // Enemy ist tot
+        setTimeout(() => {
+          this.level.enemies.splice(index, 1);
+        }, 400);
+      }
+    }
+  }
+
   characterWasHit() {
     let wasInTheAir = this.character.inTheAir;
-    this.character.hit();
+    this.character.hitCharacter();
     this.statusBarHealth.setPercentage(this.character.energy);
     wasInTheAir = false; // Charakter ist nicht mehr in der Luft
   }
 
-  jumpedOnChicken(index) {
+  jumpOnChicken(index) {
     let wasInTheAir = this.character.inTheAir;
-    this.level.enemies[index].dead = true; // Enemy ist tot
-    this.landing_sound.play();
-    setTimeout(() => {
+    if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht
       this.level.enemies.splice(index, 1);
-    }, 400);
-    wasInTheAir = false; // Reset für den nächsten Durchlauf
+      wasInTheAir = false; // Reset für den nächsten Durchlauf
+    }
   }
 
-  characterMeetsChicken(enemy, index) {
+  characterHittedChicken(enemy, index) {
     let wasInTheAir = this.character.inTheAir;
     // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
-    if (this.character.isColliding(enemy) && !this.character.inTheAir) {
+    if (this.character.isColliding(enemy) && !this.character.inTheAir && !this.level.enemies[index].dead) {
       this.characterWasHit();
       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
-    } else if (wasInTheAir && this.character.isColliding(enemy)) {
-      this.jumpedOnChicken(index);
+    } else if (wasInTheAir && this.character.isColliding(enemy) && !this.level.enemies[index].dead) {
+      this.landing_sound.play();
+      this.level.enemies[index].dead = true;
+      setTimeout(() => {
+        this.jumpOnChicken(index);
+      }, 175);
+     
     }
   }
 
   bottleHittedEndboss(throwableObject) {
     throwableObject.hitted();
     this.danger_sound.play();
-    this.background_sound.pause();
-    this.endboss.hit(); // Energy wird weniger
+    this.endboss.hitEndboss(); // Energy wird weniger
     this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
   }
 
-  bottleMeetsEndboss(throwableObject) {
+  bottleKillsEndboss(throwableObject) {
     if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
       this.bottleHittedEndboss(throwableObject);
       // Endboss besiegt, Spiel zu Ende
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
+        this.showLostScreen();
       }
     }
   }
@@ -234,12 +237,45 @@ class World {
 
   showLostScreen() {
     let lostScreen = document.getElementById("lostScreen");
+    let gameoverScreen = document.getElementById("gameoverScreen");
+    
     if (this.character.isDead()) {
-      // Der Charakter ist tot, zeige das Bild an
-      lostScreen.classList.remove("d-none");
+        // Der Charakter ist tot, zeige das Bild an
+        lostScreen.classList.remove("d-none");
     } else {
-      // Der Charakter ist nicht tot, verstecke das Bild
-      lostScreen.classList.add("d-none");
+        // Der Charakter ist nicht tot, verstecke den Verlustbildschirm
+        lostScreen.classList.add("d-none");
     }
+
+    if (this.endboss.isDead()) {
+        // Der Endboss ist tot, zeige den Game-Over-Bildschirm an
+        gameoverScreen.classList.remove("d-none");
+    } else {
+        // Der Endboss lebt, verstecke den Game-Over-Bildschirm
+        gameoverScreen.classList.add("d-none");
+    }
+}
+muteMusicIsClicked = false;
+
+muteMusic() {
+  muteMusicIsClicked = !muteMusicIsClicked;
+  let muteMusic = document.getElementById("muteMusic");
+// Schalte den Sound aus
+  if (muteMusicIsClicked) {
+    muteMusic.src = "img/9_intro_outro_screens/mute.png";
+    this.background_sound.pause();
+    console.log('Ton ist aus');
+    // Schalte den Sound ein
+  }
+  else  {
+    console.log('Ton ist an');
+    this.background_sound.play();
+    muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
 }
+
+
+
+}
+
+

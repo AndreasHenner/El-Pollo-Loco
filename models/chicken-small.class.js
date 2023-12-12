@@ -3,6 +3,7 @@ class ChickenSmall extends MovableObject { // Chicken hat alle Eigenschaften von
     height = 40;
     width = 40;
     y = 390;
+    dead = false;
 
     IMAGES_WALKING = [
         "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
@@ -24,17 +25,23 @@ class ChickenSmall extends MovableObject { // Chicken hat alle Eigenschaften von
     }
     
     animate() {
-      setInterval(() => this.moveLeft(), 1000 / 50);
-
+      // Move
+      setInterval(() => this.moveLeft(), 1000 / 60);
+      
+      // Animation for walking
       setInterval(() => {
-        this.playAnimation(this.IMAGES_WALKING);
-        if (this.dead || this.splashed) this.playAnimation(this.IMAGES_DEAD);
-      }, 100);
+        if (!this.dead) this.playAnimation(this.IMAGES_WALKING);}, 100);
+    
+      // Animation for dead
+      setInterval(() => {
+        if (this.dead) {
+          this.playDeadAnimation();
+          this.speed = 0;        }
+      }, 5); 
     }
-
-    moveLeft() {
-      super.moveLeft(); // moveLeft() von movableObject wird ausgeführt
-      this.otherDirection = false;
+  
+    playDeadAnimation() {
+      this.playAnimation(this.IMAGES_DEAD);
     }
   }
    

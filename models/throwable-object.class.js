@@ -40,9 +40,9 @@ class ThrowableObject extends MovableObject {
     this.throwing_sound.play();
     setInterval(() => {
       if (this.direction) {
-        this.x -= 15; // Wurf nach links
+        this.x -= 10; // Wurf nach links
       } else {
-        this.x += 15; // Wurf nach links
+        this.x += 10; // Wurf nach links
       }
     }, 25);
      // Flasche zerbricht wenn sie aufkommt

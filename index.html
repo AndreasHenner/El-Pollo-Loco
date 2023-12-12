@@ -25,27 +25,21 @@
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"/>
+    <link rel="icon" type="image/x-icon" href="img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"/>
   </head>
   <body>
-    <img
-      id="startImg"
-      class="start-img"
-      src="img/9_intro_outro_screens/start/startscreen_1.png"/>
-    <img
-      id="lostScreen"
-      class="lost-screen d-none"
-      src="img/9_intro_outro_screens/game_over/oh no you lost!.png"/>
+    <img id="startImg" class="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png"/>
+    <img id="lostScreen" class="lost-screen d-none" src="img/9_intro_outro_screens/game_over/oh no you lost!.png"/>
+    <img id="gameoverScreen" class="lost-screen d-none" src="img/9_intro_outro_screens/game_over/game over!.png"/>
     <h1>El Pollo Loco</h1>
 
+    <div class="mute-music"><img id="muteMusic" onclick="muteMusic()" src="img/9_intro_outro_screens/loud.png"></div>
     <div class="canvas-div" id="canvasDiv">
       <canvas id="canvas" width="720" height="480"></canvas>
       <button id="buttonExitFullscreen" class="button-exit-fullscreen d-none" onclick="leaveFullscreen()">exit fullscreen</button>
     </div>
-   
+    
+  
 
     <div class="counterArea">
       <button id="startGameButton" class="start-game-button" onclick="init()">Start</button>
@@ -53,9 +47,7 @@
       <h2 id="counterCoins" class="counter-of-coins">0</h2>
     </div>
     <div>
-      <img
-        src="img/7_statusbars/3_icons/icon_health_endboss.png"
-        class="endboss-statusbar-icon"/>
+      <img src="img/7_statusbars/3_icons/icon_health_endboss.png" class="endboss-statusbar-icon"/>
     </div>
 
     <div class="game-instruction">
@@ -64,9 +56,7 @@
       <h2>move right:</h2>
       <img src="img/9_intro_outro_screens/start/arrowRight.png" />
       <h2>jump:</h2>
-      <img
-        class="space-bar"
-        src="img/9_intro_outro_screens/start/spaceBar.png"/>
+      <img class="space-bar" src="img/9_intro_outro_screens/start/spaceBar.png"/>
       <h2>throw:</h2>
       <img src="img/9_intro_outro_screens/start/D.png" />
     </div>
@@ -76,7 +66,6 @@
         class="icon-fullscreen"
         onclick="showFullscreen()"
         src="img/9_intro_outro_screens/start/fullscreen.png"/>
-      <button id="restartGameButton" class="restart-game-button">restart</button>
     </div>
 
     <!--Tasten für Handymodus -->

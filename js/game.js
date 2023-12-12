@@ -1,6 +1,7 @@
 let canvas; // ist der Hintergrund des Spiels, ein Container mit Breite und Höhe!
 let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
+let background_sound = new Audio("audio/backgroundMusic.mp3");
 
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
@@ -9,6 +10,7 @@ function init() {
   let startGameButton = document.getElementById("startGameButton");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
+  background_sound.play();
 }
 
 // beendet alle Intervalle
@@ -119,4 +121,20 @@ function leaveFullscreen() {
   }
   let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
   buttonExitFullscreen.classList.add("d-none");
+}
+
+muteMusicIsClicked = false;
+
+function muteMusic() {
+  muteMusicIsClicked = !muteMusicIsClicked;
+  let muteMusic = document.getElementById("muteMusic");
+// Schalte den Sound aus
+  if (muteMusicIsClicked) {
+    muteMusic.src = "img/9_intro_outro_screens/mute.png";
+    background_sound.pause();
+    // Schalte den Sound ein
+  } else  {
+    background_sound.play();
+    muteMusic.src = "img/9_intro_outro_screens/loud.png";
+  }
 }

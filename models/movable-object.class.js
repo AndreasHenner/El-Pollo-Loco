@@ -45,8 +45,17 @@ class MovableObject extends DrawableObject {
     );
   }
 
-  hit() {
+  hitEndboss() {
     this.energy -= 20; //  sobald kollidiert, Energie des Characters/Endboss wird weniger
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime(); // Zeit in Zahlenform, ms die vergangen sind seit dem 01.01.1970 - lastHit wird der Zeit gleichgesetzt
+    }
+  }
+
+  hitCharacter() {
+    this.energy -= 5; //  sobald kollidiert, Energie des Characters/Endboss wird weniger
     if (this.energy < 0) {
       this.energy = 0;
     } else {

@@ -197,13 +197,23 @@ canvas {
 
 .button-left-right {
   position: absolute;
-  left: 170px;
+  left: 100px;
 }
 
 .button-jump-throw {
   position: absolute;
   display: flex;
-  right: 170px;
+  right: 100px;
+}
+
+.mute-music {
+  top: 150px;
+  z-index: 999;
+  position: absolute;
+}
+
+.mute-music img {
+  width: 30px;
 }
 
 /* Responsive Smartphone */
@@ -217,6 +227,7 @@ canvas {
 
   #startImg {
     height: 100vh;
+    width: 100vw;
   }
 
   .smartphone-button-area {
@@ -294,6 +305,7 @@ canvas {
 @media only screen and (max-height: 480px) {
   canvas {
     height: 100vh;
+    width: 100vw;
   }
 
   .start-img {
@@ -314,17 +326,17 @@ canvas {
 
   #counterBottles {
     margin-top: -320px;
-    margin-left: -247px;
+    margin-left: -350px;
   }
 
   #counterCoins {
     margin-top: -320px;
-    margin-left: -135px;
+    margin-left: -190px;
   }
 
   .endboss-statusbar-icon {
-    width: 50px;
-    margin-top: -379px;
-    margin-left: 101px;
+    width: 53px;
+    margin-top: -380px;
+    margin-left: 161px;
   }
 }
