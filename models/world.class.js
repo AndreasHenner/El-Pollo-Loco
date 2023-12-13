@@ -27,7 +27,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-   
+    console.log(this.level.enemies);
   }
 
   setWorld() {
@@ -99,10 +99,11 @@ class World {
 
   checkCollisions() {
     // Character mit Enemy
-    this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index), );
+    this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index),);
     // Endboss mit ThrowableObject(Bottle)
     this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist das letzte Element im Array "enemies"
     this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject),);
+    
     // Enemies mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => { this.bottleKillsChicken(throwableObject);
       if (throwableObject.deletable) {
@@ -111,31 +112,14 @@ class World {
     });
   }
 
-  bottleKillsChicken(throwableObject) {
-    for (let index = 0; index < this.level.enemies.length; index++) {
-      const enemy = this.level.enemies[index];
-      if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
-        throwableObject.hitted(); // Flasche zerplatzt
-        this.level.enemies[index].dead = true; // Enemy ist tot
-        setTimeout(() => {
-          this.level.enemies.splice(index, 1);
-        }, 400);
-      }
-    }
-  }
-
-  characterWasHit() {
-    let wasInTheAir = this.character.inTheAir;
+  characterWasHit() { 
     this.character.hitCharacter();
     this.statusBarHealth.setPercentage(this.character.energy);
-    wasInTheAir = false; // Charakter ist nicht mehr in der Luft
   }
 
   jumpOnChicken(index) {
-    let wasInTheAir = this.character.inTheAir;
     if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht
       this.level.enemies.splice(index, 1);
-      wasInTheAir = false; // Reset für den nächsten Durchlauf
     }
   }
 
@@ -146,12 +130,15 @@ class World {
       this.characterWasHit();
       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
     } else if (wasInTheAir && this.character.isColliding(enemy) && !this.level.enemies[index].dead) {
+      console.log('jump on chicken');
+      console.log(this.level.enemies);
+      this.character.inTheAir = false;
+      console.log(this.character.inTheAir);
       this.landing_sound.play();
       this.level.enemies[index].dead = true;
       setTimeout(() => {
         this.jumpOnChicken(index);
       }, 175);
-     
     }
   }
 
@@ -169,6 +156,19 @@ class World {
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
         this.showLostScreen();
+      }
+    }
+  }
+
+  bottleKillsChicken(throwableObject) {
+    for (let index = 0; index < this.level.enemies.length; index++) {
+      const enemy = this.level.enemies[index];
+      if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
+        throwableObject.hitted(); // Flasche zerplatzt
+        this.level.enemies[index].dead = true; // Enemy ist tot
+        setTimeout(() => {
+          this.level.enemies.splice(index, 1);
+        }, 400);
       }
     }
   }

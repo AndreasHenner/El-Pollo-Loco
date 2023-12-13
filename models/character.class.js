@@ -81,6 +81,7 @@ class Character extends MovableObject {
   snoring_sound = new Audio("audio/snoring.mp3");
   inTheAir_sound = new Audio("audio/inTheAir.mp3");
   sleepCounter = 0;
+  inTheAir = false;
 
   constructor() {
     super().loadImg("img/2_character_pepe/2_walk/W-21.png"); // loadImg wird hier von der SuperKlasse aufgerufen
@@ -110,11 +111,7 @@ class Character extends MovableObject {
       this.moveLeft();
     // Jump
     if (this.canJump()) {
-      this.inTheAir = true; // Character ist in der Luft
       this.inTheAir_sound.play();
-      setTimeout(() => {
-        this.inTheAir = false; // Character ist wieder gelandet
-      }, 1500);
       this.jump();
     }
     this.world.camera_x = -this.x + 100;
@@ -150,7 +147,12 @@ class Character extends MovableObject {
     // Hurt-Animation
     else if (this.isHurt()) this.playHurtAnimation();
     // Jump-Animation
-    else if (this.isAboveGround()) this.playJumpAnimation();
+    else if (this.isAboveGround()){
+      this.playJumpAnimation();
+      this.inTheAir = true;
+      console.log(this.inTheAir);
+
+    } 
     // Walk-Animation
     else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playWalkAnimation();
     // Sleep-Animation
@@ -191,6 +193,7 @@ class Character extends MovableObject {
 
   playStandingAnimation() {
     this.sleepCounter++;
+   
     this.playAnimation(this.IMAGES_STANDING);
   }
 

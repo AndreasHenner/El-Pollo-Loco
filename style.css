@@ -247,6 +247,11 @@ canvas {
     aspect-ratio: 720/480;
     width: 644px;
   }
+
+  #muteMusic {
+    position: absolute;
+    top: -120px;
+  }
 }
 
 

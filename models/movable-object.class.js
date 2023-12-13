@@ -92,5 +92,10 @@ class MovableObject extends DrawableObject {
 
   jump() {
     this.speedY = 30;
+    setTimeout(() => {
+      this.inTheAir = false;
+      console.log(this.inTheAir);
+    }, 1000);
+    
   }
 }

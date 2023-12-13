@@ -8,6 +8,8 @@ function init() {
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
   let startImg = document.getElementById("startImg");
   let startGameButton = document.getElementById("startGameButton");
+  let muteMusic = document.getElementById("muteMusic");
+  muteMusic.classList.remove("d-none");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
   background_sound.play();
