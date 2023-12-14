@@ -164,6 +164,7 @@ class Character extends MovableObject {
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
+    reloadPageButton.classList.remove("d-none");
     this.world.showLostScreen();
     background_sound.pause();
     this.walking_sound.pause();

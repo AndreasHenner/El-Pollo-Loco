@@ -154,7 +154,7 @@ class World {
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
         this.showLostScreen();
-        startGameButton.classList.remove("d-none");
+        reloadPageButton.classList.remove("d-none");
       }
     }
   }

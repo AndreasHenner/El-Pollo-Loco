@@ -140,3 +140,7 @@ function muteMusic() {
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
 }
+
+function reloadPage() {
+  location.reload();
+}
