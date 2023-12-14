@@ -214,6 +214,11 @@ canvas {
 
 .mute-music img {
   width: 30px;
+  border-radius: 10px;
+}
+
+.mute-music img:hover {
+  cursor: pointer;
 }
 
 /* Responsive Smartphone */
@@ -251,6 +256,7 @@ canvas {
   #muteMusic {
     position: absolute;
     top: -120px;
+   
   }
 }
 

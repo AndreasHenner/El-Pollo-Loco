@@ -12,7 +12,7 @@ function init() {
   muteMusic.classList.remove("d-none");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
-  background_sound.play();
+
 }
 
 // beendet alle Intervalle

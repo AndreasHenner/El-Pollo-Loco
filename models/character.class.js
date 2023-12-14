@@ -150,8 +150,6 @@ class Character extends MovableObject {
     else if (this.isAboveGround()){
       this.playJumpAnimation();
       this.inTheAir = true;
-      console.log(this.inTheAir);
-
     } 
     // Walk-Animation
     else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playWalkAnimation();
@@ -192,8 +190,8 @@ class Character extends MovableObject {
   }
 
   playStandingAnimation() {
+    this.inTheAir = false;
     this.sleepCounter++;
-   
     this.playAnimation(this.IMAGES_STANDING);
   }
 

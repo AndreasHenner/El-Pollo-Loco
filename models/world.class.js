@@ -14,7 +14,7 @@ class World {
   collecting_sound = new Audio("audio/collect.mp3");
   landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
- 
+  background_sound = new Audio("audio/backgroundMusic.mp3");
   throwableObjects = [];
 
 
@@ -27,7 +27,7 @@ class World {
     this.run();
     this.showCollectedBottles();
     this.showCollectedCoins();
-    console.log(this.level.enemies);
+    background_sound.play();
   }
 
   setWorld() {
@@ -38,7 +38,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 200);
+    }, 100);
   }
 
   // erzeugt eine neue Flasche
@@ -130,10 +130,7 @@ class World {
       this.characterWasHit();
       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
     } else if (wasInTheAir && this.character.isColliding(enemy) && !this.level.enemies[index].dead) {
-      console.log('jump on chicken');
-      console.log(this.level.enemies);
       this.character.inTheAir = false;
-      console.log(this.character.inTheAir);
       this.landing_sound.play();
       this.level.enemies[index].dead = true;
       setTimeout(() => {
@@ -145,6 +142,7 @@ class World {
   bottleHittedEndboss(throwableObject) {
     throwableObject.hitted();
     this.danger_sound.play();
+    background_sound.pause();
     this.endboss.hitEndboss(); // Energy wird weniger
     this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
   }
@@ -156,19 +154,20 @@ class World {
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
         this.showLostScreen();
+        startGameButton.classList.remove("d-none");
       }
     }
   }
 
   bottleKillsChicken(throwableObject) {
     for (let index = 0; index < this.level.enemies.length; index++) {
-      const enemy = this.level.enemies[index];
+      let enemy = this.level.enemies[index];
       if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
         throwableObject.hitted(); // Flasche zerplatzt
         this.level.enemies[index].dead = true; // Enemy ist tot
         setTimeout(() => {
           this.level.enemies.splice(index, 1);
-        }, 400);
+        }, 200);
       }
     }
   }
@@ -264,11 +263,9 @@ muteMusic() {
   if (muteMusicIsClicked) {
     muteMusic.src = "img/9_intro_outro_screens/mute.png";
     this.background_sound.pause();
-    console.log('Ton ist aus');
     // Schalte den Sound ein
   }
   else  {
-    console.log('Ton ist an');
     this.background_sound.play();
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
