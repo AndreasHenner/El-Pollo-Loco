@@ -169,6 +169,7 @@ class Character extends MovableObject {
     smartphoneButtonArea.classList.add("game-over-screen");
     this.world.showLostScreen();
     this.world.danger_sound.pause();
+    background_sound.pause();
     this.walking_sound.pause();
   }
 

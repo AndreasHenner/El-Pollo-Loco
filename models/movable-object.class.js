@@ -46,7 +46,7 @@ class MovableObject extends DrawableObject {
   }
 
   hitEndboss() {
-    this.energy -= 20; //  sobald kollidiert, Energie des Characters/Endboss wird weniger
+    this.energy -= 20; //  sobald kollidiert, Energie des Endboss wird weniger
     if (this.energy < 0) {
       this.energy = 0;
     } else {
@@ -55,7 +55,7 @@ class MovableObject extends DrawableObject {
   }
 
   hitCharacter() {
-    this.energy -= 10; //  sobald kollidiert, Energie des Characters/Endboss wird weniger
+    this.energy -= 5; //  sobald kollidiert, Energie des Characters wird weniger
     if (this.energy < 0) {
       this.energy = 0;
     } else {

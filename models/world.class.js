@@ -9,6 +9,7 @@ class World {
   statusBarBottles = new StatusbarBottles();
   statusBarCoins = new StatusbarCoins();
   statusBarEndboss = new StatusbarEndboss();
+  imgStatusbarEndboss = new ImgStatusbarEndboss();
   collectionBottles = 0;
   collectionCoins = 0;
   collecting_sound = new Audio("audio/collect.mp3");
@@ -99,17 +100,25 @@ class World {
 
   checkCollisions() {
     // Character mit Enemy
-    this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index),);
+    this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index));
+
+    // Character mit Endboss
+    this.endboss = this.level.enemies[this.level.enemies.length - 1];
+    if (this.character.isColliding(this.endboss)) {
+       this.characterHittedEndboss();
+    }
     // Endboss mit ThrowableObject(Bottle)
-    this.endboss = this.level.enemies[this.level.enemies.length -1]; // Endboss ist immer das letzte Element im Array
-    this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject),);
+    this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist immer das letzte Element im Array
+    this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject));
+
     // Enemies mit ThrowableObject(Bottle)
-    this.throwableObjects.forEach((throwableObject, index) => { this.bottleKillsChicken(throwableObject);
-      if (throwableObject.deletable) {
-        this.throwableObjects.splice(index, 1);
-      }
+    this.throwableObjects.forEach((throwableObject, index) => { 
+        this.bottleKillsChicken(throwableObject);
+        if (throwableObject.deletable) {
+            this.throwableObjects.splice(index, 1);
+        }
     });
-  }
+}
 
   characterWasHit() { 
     this.character.hitCharacter();
@@ -117,10 +126,16 @@ class World {
   }
 
   jumpOnChicken(index) {
-    if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht
-      this.level.enemies.splice(index, 1);
-    }
+    if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht beim Draufspringen
+        this.level.enemies.splice(index, 1);
+}
   }
+
+  characterHittedEndboss() {
+   
+    this.character.hitCharacter();
+  }
+  
 
   characterHittedChicken(enemy, index) {
     let wasInTheAir = this.character.inTheAir;
@@ -194,6 +209,7 @@ class World {
     this.addToMap(this.statusBarBottles);
     this.addToMap(this.statusBarCoins);
     this.addToMap(this.statusBarEndboss);
+    this.addToMap(this.imgStatusbarEndboss);
 
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
