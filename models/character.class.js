@@ -80,6 +80,7 @@ class Character extends MovableObject {
   walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
   snoring_sound = new Audio("audio/snoring.mp3");
   inTheAir_sound = new Audio("audio/inTheAir.mp3");
+  hurt_sound = new Audio("audio/hurt.mp3");
   sleepCounter = 0;
   inTheAir = false;
 
@@ -165,14 +166,16 @@ class Character extends MovableObject {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
     reloadPageButton.classList.remove("d-none");
+    smartphoneButtonArea.classList.add("game-over-screen");
     this.world.showLostScreen();
-    background_sound.pause();
+    this.world.danger_sound.pause();
     this.walking_sound.pause();
   }
 
   playHurtAnimation() {
     this.playAnimation(this.IMAGES_HURT);
     this.stopSleeping();
+    this.hurt_sound.play();
   }
 
   playJumpAnimation() {

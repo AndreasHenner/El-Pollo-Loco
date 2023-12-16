@@ -38,7 +38,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 100);
+    }, 90);
   }
 
   // erzeugt eine neue Flasche
@@ -101,9 +101,8 @@ class World {
     // Character mit Enemy
     this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index),);
     // Endboss mit ThrowableObject(Bottle)
-    this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist das letzte Element im Array "enemies"
+    this.endboss = this.level.enemies[this.level.enemies.length -1]; // Endboss ist immer das letzte Element im Array
     this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject),);
-    
     // Enemies mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => { this.bottleKillsChicken(throwableObject);
       if (throwableObject.deletable) {
@@ -155,6 +154,7 @@ class World {
         this.danger_sound.pause();
         this.showLostScreen();
         reloadPageButton.classList.remove("d-none");
+        smartphoneButtonArea.classList.add("game-over-screen");
       }
     }
   }

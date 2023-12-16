@@ -60,7 +60,7 @@ canvas {
   border-radius: 10px;
   color: black;
   padding: 12px;
-  background-color: #ea5f00;
+  background-color: #b59b45;
   display: flex;
   align-items: center;
   font-family: "zabars", Arial, Helvetica, sans-serif;
@@ -70,7 +70,6 @@ canvas {
   margin-top: -380px;
   margin-left: -298px;
   font-size: 38px;
-
   position: absolute;
 }
 
@@ -108,7 +107,7 @@ canvas {
   display: flex;
   align-items: center;
   width: 720px;
-  background-color: orange;
+  background-color: #b59b45;
   justify-content: center;
  
 }
@@ -130,7 +129,7 @@ canvas {
   gap: 10px;
   align-items: center;
   display: flex;
-  background-color: orange;
+  background-color: #b59b45;
   justify-content: center;
   width: 720px;
   border-bottom-left-radius: 65px;
@@ -153,7 +152,7 @@ canvas {
   font-size: 20px;
   border-radius: 15px;
   color: black;
-  background-color: orange;
+  background-color: #b59b45;
   right: -245px;
   top: -465px;
   font-family: "zabars", Arial, Helvetica, sans-serif;
@@ -162,7 +161,7 @@ canvas {
 
 .start-game-button:hover {
   cursor: pointer;
-  background-color: #d4a753;
+  background-color: #d8bb85;
 }
 
 .reload-page-button {
@@ -172,16 +171,16 @@ canvas {
   font-size: 20px;
   border-radius: 15px;
   color: black;
-  background-color: orange;
+  background-color: #b59b45;
   right: -245px;
-  top: -385px;
+  top: -520px;
   font-family: "zabars", Arial, Helvetica, sans-serif;
   font-size: 48px;
 }
 
 .reload-page-button:hover {
   cursor: pointer;
-  background-color: #d4a753;
+  background-color: #d8bb85;
 }
 
 #btnLeft{
@@ -230,6 +229,10 @@ canvas {
   cursor: pointer;
 }
 
+.game-over-screen {
+  margin-top: -100px!important;
+}
+
 /* Responsive Smartphone */
 
 @media (max-width: 900px) and (orientation: landscape) {
@@ -246,7 +249,7 @@ canvas {
 
   .smartphone-button-area {
     display: flex;
-    margin-top: -40px;
+    margin-top: -50px;
   }
 
   #startGameButton {
@@ -257,15 +260,20 @@ canvas {
 
    .lost-screen {
     z-index: 100;
-    top: 6px;
+    top: 0;
     aspect-ratio: 720/480;
-    width: 644px;
+    width: 100%;
+    height: 100%;
   }
 
   #muteMusic {
     position: absolute;
     top: -120px;
-   
+  }
+
+  #reloadPageButton {
+    right: -290px;
+    top: -315px;
   }
 }
 

@@ -35,8 +35,6 @@ class Endboss extends MovableObject {
   ];
 
 
-  snoring_sound = new Audio("audio/snoring.mp3");
-
   constructor() {
     super().loadImg(this.IMAGES_ATTACK[0]); // 1. Bild im Array wird geladen
     this.loadImages(this.IMAGES_WALKING);
@@ -67,8 +65,7 @@ class Endboss extends MovableObject {
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
-    this.snoring_sound.pause();
-    background_sound.pause();
+    snoring_sound.pause();
   }
 
   playWalkAnimation() {
