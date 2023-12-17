@@ -59,13 +59,12 @@ class Endboss extends MovableObject {
 
   playHurtAnimation() {
     this.playAnimation(this.IMAGES_HURT);
-    this.speed = 3;
+    this.speed = 4;
   }
 
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
-    snoring_sound.pause();
   }
 
   playWalkAnimation() {

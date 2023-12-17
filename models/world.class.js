@@ -6,18 +6,18 @@ class World {
   keyboard;
   camera_x = 0; // Bildausschnitt, bzw Hintergrund X Koordinate
   statusBarHealth = new StatusbarHealth();
-  statusBarBottles = new StatusbarBottles();
-  statusBarCoins = new StatusbarCoins();
+  imgStatusBarBottles = new ImgStatusbarBottles();
+  imgStatusBarCoins = new ImgStatusbarCoins();
   statusBarEndboss = new StatusbarEndboss();
   imgStatusbarEndboss = new ImgStatusbarEndboss();
-  collectionBottles = 0;
-  collectionCoins = 0;
+  coinCounter = new Counter(200, 110, 72);
+  bottleCounter = new Counter(50, 110, 48);
   collecting_sound = new Audio("audio/collect.mp3");
   landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
   background_sound = new Audio("audio/backgroundMusic.mp3");
   throwableObjects = [];
-
+ 
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d"); // es wird etwas dem canvas hinzugefügt
@@ -35,6 +35,7 @@ class World {
     this.character.world = this; // world wird an den Character übergeben dass Character auf variablen von der world zugreifen kann
   }
 
+  /**CheckCollissions and checkThrowObjects will be executed*/
   run() {
     setInterval(() => {
       this.checkCollisions();
@@ -42,23 +43,31 @@ class World {
     }, 90);
   }
 
-  // erzeugt eine neue Flasche
+  /**New generated Bottle will be thrown*/
   checkThrowObjects() {
-   
-    if (this.keyboard.D && this.collectionBottles > 0) {
+    if (this.keyboard.D && this.bottleCounter.counter > 0) {
       this.generateNewBottle();
     }
   }
 
+  /**New Bottle will be generate*/
   generateNewBottle() {
     const counter = document.getElementById("counterBottles");
     let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 150, this.character.otherDirection);
     this.throwableObjects.push(bottle);
-    this.collectionBottles--;
+    this.bottleCounter.counter--;
     counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
   }
 
-  // Flaschen anzeigen
+
+    /**Bottles will be collected*/
+    collectBottles(index) {
+      this.collecting_sound.play();
+      this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
+      this.bottleCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
+    }
+
+  /**Bottlecollection will be updated and shown on screen*/
   showCollectedBottles() {
     setInterval(() => {
       this.level.bottles.forEach((bottle, index) => {
@@ -69,16 +78,14 @@ class World {
     }, 10);
   }
 
-  // Flaschen sammeln
-  collectBottles(index) {
-    const counter = document.getElementById("counterBottles");
-    this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
-    this.collectionBottles++; // Collection Flaschen wird erhöht wenn eingesammelt
-    counter.innerHTML = this.collectionBottles; // Der Counter Flaschen zeigt die Collection an
+  /**Coins will be collected*/
+  collectCoins(index) {
     this.collecting_sound.play();
+    this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
+    this.coinCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
   }
 
-  // Coins anzeigen
+  /**Coinscollection will be updated and shown on screen*/
   showCollectedCoins() {
     setInterval(() => {
       this.level.coins.forEach((coin, index) => {
@@ -89,28 +96,18 @@ class World {
     }, 10);
   }
 
-  // Coins sammeln
-  collectCoins(index) {
-    const counter = document.getElementById("counterCoins");
-    this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
-    this.collectionCoins++; // Collection Flaschen wird erhöht wenn eingesammelt
-    counter.innerHTML = this.collectionCoins; // Der Counter Flaschen zeigt die Collection an
-    this.collecting_sound.play();
-  }
-
+  /**Collission will be checked and detected*/
   checkCollisions() {
-    // Character mit Enemy
+    this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist immer das letzte Element im Array
+    
+    // Character mit Enemy(Chicken)
     this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index));
-
     // Character mit Endboss
-    this.endboss = this.level.enemies[this.level.enemies.length - 1];
     if (this.character.isColliding(this.endboss)) {
-       this.characterHittedEndboss();
+       this.characterWasHit();
     }
     // Endboss mit ThrowableObject(Bottle)
-    this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist immer das letzte Element im Array
     this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject));
-
     // Enemies mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => { 
         this.bottleKillsChicken(throwableObject);
@@ -120,23 +117,20 @@ class World {
     });
 }
 
+/**Character is hurt. Energylevel is decreased*/
   characterWasHit() { 
     this.character.hitCharacter();
     this.statusBarHealth.setPercentage(this.character.energy);
   }
 
+  /**Chicken removes from the map when it is dead */
   jumpOnChicken(index) {
     if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht beim Draufspringen
         this.level.enemies.splice(index, 1);
 }
   }
-
-  characterHittedEndboss() {
-   
-    this.character.hitCharacter();
-  }
   
-
+  /**Character hit Chicken. Either on the ground(Character gets hurt) or Jumping at the chicken(Chicken dies) */
   characterHittedChicken(enemy, index) {
     let wasInTheAir = this.character.inTheAir;
     // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
@@ -153,6 +147,7 @@ class World {
     }
   }
 
+/** if bottle hit endboss, endboss gets hurt */
   bottleHittedEndboss(throwableObject) {
     throwableObject.hitted();
     this.danger_sound.play();
@@ -161,19 +156,21 @@ class World {
     this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
   }
 
+  /** endboss dies because hitted by bottle and game is over */
   bottleKillsEndboss(throwableObject) {
     if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
       this.bottleHittedEndboss(throwableObject);
       // Endboss besiegt, Spiel zu Ende
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
-        this.showLostScreen();
+        this.showGameoverScreen();
         reloadPageButton.classList.remove("d-none");
         smartphoneButtonArea.classList.add("game-over-screen");
       }
     }
   }
 
+  /**If Bottle will be thrown on a chicken, Chicken dies and disappears from screen*/
   bottleKillsChicken(throwableObject) {
     for (let index = 0; index < this.level.enemies.length; index++) {
       let enemy = this.level.enemies[index];
@@ -187,6 +184,7 @@ class World {
     }
   }
 
+  /**Elements will be drawn into the Canvas*/
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // Canvas wird gelöscht
 
@@ -206,10 +204,12 @@ class World {
 
     //Koordinaten sind nicht fix und gehen mit der Kamera mit
     this.addToMap(this.statusBarHealth);
-    this.addToMap(this.statusBarBottles);
-    this.addToMap(this.statusBarCoins);
+    this.addToMap(this.imgStatusBarBottles);
+    this.addToMap(this.imgStatusBarCoins);
     this.addToMap(this.statusBarEndboss);
     this.addToMap(this.imgStatusbarEndboss);
+    this.ctx.fillText(this.bottleCounter.counter, this.bottleCounter.x, this.bottleCounter.y, this.bottleCounter.fontSize);
+    this.ctx.fillText(this.coinCounter.counter, this.coinCounter.x, this.coinCounter.y, this.coinCounter.fontSize);
 
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
@@ -218,9 +218,9 @@ class World {
     });
   }
 
+  /**Objects will be added to the Map*/
   addObjectsToMap(objects) {
-    objects.forEach((o) => {
-      // für jedes Objekt(o) im Array objects wird die Funktion addToMap() aufgerufen
+    objects.forEach((o) => { // für jedes Objekt(o) im Array objects wird die Funktion addToMap() aufgerufen
       this.addToMap(o);
     });
   }
@@ -237,6 +237,7 @@ class World {
     }
   }
 
+  /**Image will be mirrored*/
   flipImage(mo) {
     this.ctx.save(); // speichert aktuellen Status/Eigenschaften vom Kontext
     this.ctx.translate(mo.width, 0); // Bild wird gespiegelt
@@ -244,34 +245,40 @@ class World {
     mo.x = mo.x * -1; // X-Koordinate wird gespiegelt
   }
 
+  /**Mirroring is undone*/
   flipImageBack(mo) {
     // Spiegelung wird rückgängig gemacht
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
 
+  /**If Character is dead, Lostcreen will be shown*/
   showLostScreen() {
     let lostScreen = document.getElementById("lostScreen");
-    let gameoverScreen = document.getElementById("gameoverScreen");
-    
     if (this.character.isDead()) {
         // Der Charakter ist tot, zeige das Bild an
         lostScreen.classList.remove("d-none");
     } else {
-        // Der Charakter ist nicht tot, verstecke den Verlustbildschirm
+        // Der Charakter ist nicht tot, verstecke den Lostbildschirm
         lostScreen.classList.add("d-none");
     }
-
-    if (this.endboss.isDead()) {
-        // Der Endboss ist tot, zeige den Game-Over-Bildschirm an
-        gameoverScreen.classList.remove("d-none");
-    } else {
-        // Der Endboss lebt, verstecke den Game-Over-Bildschirm
-        gameoverScreen.classList.add("d-none");
-    }
 }
+
+/**If Endboss is dead, GameOverscreen will be shown*/
+showGameoverScreen() {
+  let gameoverScreen = document.getElementById("gameoverScreen");
+  if (this.endboss.isDead()) {
+    // Der Endboss ist tot, zeige den Game-Over-Bildschirm an
+    gameoverScreen.classList.remove("d-none");
+} else {
+    // Der Endboss lebt, verstecke den Game-Over-Bildschirm
+    gameoverScreen.classList.add("d-none");
+}
+}
+
 muteMusicIsClicked = false;
 
+/**Onclick on Button, mute backgroundMusic is possible*/
 muteMusic() {
   muteMusicIsClicked = !muteMusicIsClicked;
   let muteMusic = document.getElementById("muteMusic");
@@ -286,9 +293,6 @@ muteMusic() {
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
 }
-
-
-
 }
 
 

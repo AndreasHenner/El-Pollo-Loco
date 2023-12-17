@@ -66,6 +66,11 @@ canvas {
   font-family: "zabars", Arial, Helvetica, sans-serif;
 }
 
+.button-exit-fullscreen:hover {
+  cursor: pointer;
+  background-color:#d69850
+}
+
 .counter-of-bottles {
   margin-top: -380px;
   margin-left: -298px;
@@ -196,11 +201,17 @@ canvas {
 }
 
 #btnThrow{
-  width: 35px;
+  width: 30px;
   background-color: rgba(155, 197, 247);
   border-radius: 20px;
   border: none;
-  margin-left: 5px;
+  margin-left: -34px;
+  margin-top: 3px;
+  height: 30px;
+}
+
+.throw-bottle-button {
+  height: 38px;
 }
 
 .button-left-right {
@@ -221,11 +232,11 @@ canvas {
 }
 
 .mute-music img {
-  width: 30px;
+  width: 50px;
   border-radius: 10px;
 }
 
-.mute-music img:hover {
+.mute-music:hover {
   cursor: pointer;
 }
 
