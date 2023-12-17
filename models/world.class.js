@@ -10,8 +10,8 @@ class World {
   imgStatusBarCoins = new ImgStatusbarCoins();
   statusBarEndboss = new StatusbarEndboss();
   imgStatusbarEndboss = new ImgStatusbarEndboss();
-  coinCounter = new Counter(200, 110, 72);
-  bottleCounter = new Counter(50, 110, 48);
+  coinCounter = new Counter(200, 125);
+  bottleCounter = new Counter(50, 125);
   collecting_sound = new Audio("audio/collect.mp3");
   landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
@@ -208,8 +208,9 @@ class World {
     this.addToMap(this.imgStatusBarCoins);
     this.addToMap(this.statusBarEndboss);
     this.addToMap(this.imgStatusbarEndboss);
-    this.ctx.fillText(this.bottleCounter.counter, this.bottleCounter.x, this.bottleCounter.y, this.bottleCounter.fontSize);
-    this.ctx.fillText(this.coinCounter.counter, this.coinCounter.x, this.coinCounter.y, this.coinCounter.fontSize);
+    this.ctx.fillText(this.bottleCounter.counter, this.bottleCounter.x, this.bottleCounter.y);
+    this.ctx.fillText(this.coinCounter.counter, this.coinCounter.x, this.coinCounter.y);
+    this.ctx.font = "40px zabars";
 
     // die Function draw wird immer wieder aufgerufen
     let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
