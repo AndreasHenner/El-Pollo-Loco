@@ -232,7 +232,7 @@ canvas {
 }
 
 .mute-music img {
-  width: 50px;
+  width: 40px;
   border-radius: 10px;
 }
 
@@ -246,7 +246,7 @@ canvas {
 
 /* Responsive Smartphone */
 
-@media (max-width: 950px) and (orientation: landscape) {
+@media (max-width: 940px) and (orientation: landscape) {
 
   body {
     margin-bottom: 0;
@@ -295,9 +295,9 @@ canvas {
   }
 
   .button-left-right {
-    margin-top: -31px;
+    margin-top: -15px;
     margin-left: -100px;
-    left: -270px;
+    left: 183px;
     display: flex;
   }
 
@@ -333,11 +333,15 @@ canvas {
   .lost-screen {
     z-index: 100;
     position: absolute;
-    top: 0px;
+    top: -70px;
     left: 0;
     aspect-ratio: 720/480;
     width: 100%;
     height: auto;
+  }
+
+  #reloadPageButton {
+    right: -250px;
   }
 }
 
