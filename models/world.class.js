@@ -31,6 +31,7 @@ class World {
     background_sound.play();
   }
 
+  /**world is passed to the character so that the character can access variables from the world*/
   setWorld() {
     this.character.world = this; // world wird an den Character übergeben dass Character auf variablen von der world zugreifen kann
   }

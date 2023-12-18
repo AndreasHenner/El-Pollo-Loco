@@ -15,14 +15,12 @@ function init() {
 
 }
 
-// beendet alle Intervalle
+/**all Intervalls stops*/
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-// Bedienung für Smartphone
-
-// TouchStart
+/**Operation of the Smartphone-Touchstart */
 window.addEventListener("touchstart", (e) => {
   const btnLeft = document.getElementById("btnLeft");
   const btnRight = document.getElementById("btnRight");
@@ -38,7 +36,7 @@ window.addEventListener("touchstart", (e) => {
   }
 });
 
-//TouchEnd
+/**Operation of the Smartphone-Touchend */
 window.addEventListener("touchend", (e) => {
   const btnLeft = document.getElementById("btnLeft");
   const btnRight = document.getElementById("btnRight");
@@ -54,7 +52,7 @@ window.addEventListener("touchend", (e) => {
   }
 });
 
-// wenn Taste geklickt wird wirft es ein JSON raus und wird auf true gesetzt
+/**Keyboard operation if keydown*/
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == "38") {
     keyboard.UP = true;
@@ -82,6 +80,7 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
+/**Keyboard operation if keyup*/
 // wenn Taste losgelassen wird wird es wieder auf false gesetzt!
 window.addEventListener("keyup", (e) => {
   if (e.keyCode == "38") {
@@ -110,6 +109,7 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
+/**open fullscsreen*/
 function showFullscreen() {
   let canvas = document.getElementById("canvasDiv");
   let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
@@ -117,6 +117,7 @@ function showFullscreen() {
   canvas.requestFullscreen();
 }
 
+/**close fullscreen */
 function leaveFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -127,6 +128,7 @@ function leaveFullscreen() {
 
 muteMusicIsClicked = false;
 
+/**switch backgroundmusic on and off*/
 function muteMusic() {
   muteMusicIsClicked = !muteMusicIsClicked;
   let muteMusic = document.getElementById("muteMusic");
@@ -141,6 +143,7 @@ function muteMusic() {
   }
 }
 
+/**reload page*/
 function reloadPage() {
   location.reload();
 }

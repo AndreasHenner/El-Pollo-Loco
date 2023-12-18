@@ -46,6 +46,7 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**let endboss move and execute animationfunctions*/
   animate() {
     setInterval(() => this.moveLeft(), 1000 / 30);
     setInterval(() => {
@@ -57,16 +58,19 @@ class Endboss extends MovableObject {
     }, 325);
   }
 
+  /**plays hurt-animation*/
   playHurtAnimation() {
     this.playAnimation(this.IMAGES_HURT);
     this.speed = 4;
   }
 
+  /**plays dead-animation*/
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
   }
 
+  /**plays walk-animation*/
   playWalkAnimation() {
     this.playAnimation(this.IMAGES_WALKING);
     this.moveLeft();

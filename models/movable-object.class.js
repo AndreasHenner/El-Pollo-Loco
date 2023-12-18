@@ -14,6 +14,7 @@ class MovableObject extends DrawableObject {
     bottom: 0
   };
 
+  /**execute letGrafity if movableObjects are above ground*/
   applyGravity() {
    setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) { // kommt von der Funktion isAboveGround = this.y < 130
@@ -22,11 +23,13 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25); // 25x pro Sekunde
   }
 
+/**let movableObjects falling on the ground*/
   letGrafity() {
     this.y -= this.speedY;
     this.speedY -= this.acceleration; //speedY wird von acceleration abgezogen
   }
 
+  /**checks whether movable objects are above or below the ground*/
   isAboveGround() {
     if (this instanceof ThrowableObject) { // Throwable Objekt fallen immer ganz runter
       return true;   //Tiefe des Falles der Flasche
@@ -35,7 +38,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  // character.isColliding
+  /**checks collisions*/
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -45,6 +48,7 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**if endboss is colliding, energy is reducing*/
   hitEndboss() {
     this.energy -= 20; //  sobald kollidiert, Energie des Endboss wird weniger
     if (this.energy < 0) {
@@ -54,6 +58,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**if character is colliding, energy is reducing*/
   hitCharacter() {
     this.energy -= 5; //  sobald kollidiert, Energie des Characters wird weniger
     if (this.energy < 0) {
@@ -63,16 +68,19 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /***/
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit; // Differenz in ms
     timepassed = timepassed / 1000; // Differenz in Sekunden
     return timepassed < 0.5;
   }
 
+  /**if character or endboss is dead, energy is 0*/
   isDead() {
     return this.energy == 0;
   }
 
+  /**plays animation of images which are loaded in the imagecache, using Modulu*/
   playAnimation(images) {
     let i = this.currentImage % images.length;
     // Modulufunktion => let i = 0 % 6 = mathematischer Rest // i = 0, 1, 2, 3, 4, 5, 0 usw...
@@ -81,20 +89,30 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  /**
+   * let elements moves right
+   * x Coordinate of the object is increased
+  */
   moveRight() {
     this.x += this.speed;
   }
 
-  // x Koordinate vom Objekt wird um 0.15 px alle 60 ms verringert
+  /**
+   * let elements moves right
+   * x Coordinate of the object is reduced
+  */
   moveLeft() {
     this.x -= this.speed;
   }
 
+  /**
+   * let elements jump
+   * speedY will be raise from 0 to 30
+  */
   jump() {
     this.speedY = 30;
     setTimeout(() => {
       this.inTheAir = false;
-    }, 1000);
-    
+    }, 1000);  
   }
 }

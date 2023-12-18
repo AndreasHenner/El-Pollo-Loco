@@ -34,6 +34,10 @@ class ThrowableObject extends MovableObject {
   splashed = false;
   deletable = false;
 
+  /**let throwableObjects throw 
+   * detect direction of character
+   * speedY raises from 0 to 30
+  */
   throw() {
     this.speedY = 30; // Höhe des Wurfes
     this.applyGravity(); // Flasche fällt
@@ -46,8 +50,13 @@ class ThrowableObject extends MovableObject {
       }
     }, 25);
      // Flasche zerbricht wenn sie aufkommt
-    setInterval(() => this.bottleCanSplash(),  100);}
+    setInterval(() => this.bottleCanSplash(),  100);
+  }
 
+  /**let bottle splash on the ground
+   * detect if bottle on the ground
+   * either execute splash-animation or throwing-animation
+  */
   bottleCanSplash() {
     if (this.splashed || this.y > 310) {
       if (!this.splashingSoundPlayed) {
@@ -61,12 +70,16 @@ class ThrowableObject extends MovableObject {
     }
   }
 
+  /**plays splash-animation*/
   playSplashAnimation() {
     this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
     this.splashing_sound.play();
     this.splashingSoundPlayed = true;
   }
 
+  /**set splash to true
+   * set deletable to true
+  */
   hitted() {
     this.splashed = true;
     setTimeout(() => {
