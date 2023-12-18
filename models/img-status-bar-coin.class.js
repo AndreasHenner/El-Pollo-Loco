@@ -7,9 +7,5 @@ class ImgStatusbarCoins extends MovableObject {
     this.y = 65;
     this.width = 80;
     this.height = 80;
-  
-
   }
-  
-
 }

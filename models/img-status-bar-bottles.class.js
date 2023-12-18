@@ -9,5 +9,4 @@ class ImgStatusbarBottles extends MovableObject {
     this.width = 60;
     this.height = 60;
   }
-
 }

@@ -12,7 +12,6 @@ function init() {
   muteMusic.classList.remove("d-none");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
-
 }
 
 /**all Intervalls stops*/
@@ -147,3 +146,19 @@ function muteMusic() {
 function reloadPage() {
   location.reload();
 }
+
+/**track screenWidth and shows Text if Mobile is in portraitmodus*/
+function portraitModus() {
+  setInterval(() => {
+    let screenWidth = window.innerWidth;
+    let turnDevicePage = document.getElementById("turnDevicePage");
+    if (screenWidth <= 430) {
+     turnDevicePage.classList.remove("d-none");
+     turnDevicePage.classList.add("turn-your-device");
+    } if(screenWidth > 430){
+      turnDevicePage.classList.add("d-none");
+      turnDevicePage.classList.remove("turn-your-device");
+    }
+  }, 200);
+}
+

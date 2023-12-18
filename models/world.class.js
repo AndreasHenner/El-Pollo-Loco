@@ -53,13 +53,10 @@ class World {
 
   /**New Bottle will be generate*/
   generateNewBottle() {
-    const counter = document.getElementById("counterBottles");
     let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 150, this.character.otherDirection);
     this.throwableObjects.push(bottle);
     this.bottleCounter.counter--;
-    counter.innerHTML = this.collectionBottles; // zeigt die gesammelten Flaschen an nach dem wegwerfen
   }
-
 
     /**Bottles will be collected*/
     collectBottles(index) {

@@ -29,7 +29,10 @@
     <script src="js/game.js"></script>
     <link rel="icon" type="image/x-icon" href="img/9_intro_outro_screens/start/cactus.png"/>
   </head>
-  <body>
+  <body onload="portraitModus()">
+    <div class="turn-your-device d-none" id="turnDevicePage">Please rotate your device!
+      <img class="img-turn-your-device" src="img/9_intro_outro_screens/start/rotateDevice.jpg">
+    </div>
     <img id="startImg" class="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png"/>
     <img id="lostScreen" class="lost-screen d-none" src="img/9_intro_outro_screens/game_over/oh no you lost!.png"/>
     <img id="gameoverScreen" class="lost-screen d-none" src="img/9_intro_outro_screens/game_over/game over!.png"/>

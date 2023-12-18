@@ -227,7 +227,7 @@ canvas {
 
 .mute-music {
   top: 150px;
-  z-index: 999;
+  z-index: 995;
   position: absolute;
 }
 
@@ -244,16 +244,41 @@ canvas {
   margin-top: -100px!important;
 }
 
+.turn-your-device {
+  color: white;
+  position: absolute;
+  z-index: 1000;
+  margin-top: 50px;
+  font-size: 38px;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+ display: flex;
+}
+
+.img-turn-your-device {
+  margin-top: 50px;
+  height: 200px;
+}
+
 /* Responsive Smartphone */
 
-@media (max-width: 940px) and (orientation: landscape) {
+@media (max-width: 430px) and (orientation: portrait) {
+  body::before {
+    background-color: black;
+    z-index: 999;
+    background-image: none;
+  }
+}
 
+
+@media (max-width: 933px) and (orientation: landscape) {
   body {
     margin-bottom: 0;
     margin-top: 0;
   }
 
-  #startImg {
+  .start-img {
     height: 100vh;
     width: 100vw;
   }
