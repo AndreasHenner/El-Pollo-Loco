@@ -272,47 +272,15 @@ canvas {
 }
 
 
+
+
+
 @media (max-width: 933px) and (orientation: landscape) {
   body {
     margin-bottom: 0;
-    margin-top: 0;
   }
 
-  .start-img {
-    height: 100vh;
-    width: 100vw;
-  }
-
-  .smartphone-button-area {
-    display: flex;
-    margin-top: -50px;
-  }
-
-  #startGameButton {
-    position: absolute;
-    right: 120px;
-    top: 20px;
-  }
-
-   .lost-screen {
-    z-index: 100;
-    top: 0;
-    aspect-ratio: 720/480;
-    width: 100%;
-    height: 100%;
-  }
-
-  #muteMusic {
-    position: absolute;
-    top: -120px;
-  }
-
-  #reloadPageButton {
-    right: -290px;
-    top: -315px;
-  }
 }
-
 
 @media only screen and (max-width: 720px) {
   canvas {
@@ -355,18 +323,20 @@ canvas {
     top: 0;
   }
 
+   #reloadPageButton {
+    position: absolute;
+    right: 46px;
+    top: 121px;
+  }
+
   .lost-screen {
     z-index: 100;
     position: absolute;
-    top: -70px;
+    top: 0;
     left: 0;
     aspect-ratio: 720/480;
     width: 100%;
     height: auto;
-  }
-
-  #reloadPageButton {
-    right: -250px;
   }
 }
 
@@ -376,12 +346,41 @@ canvas {
     width: 100vw;
   }
 
+  #muteMusic {
+    position: absolute;
+    top: -120px;
+  }
+
+  #reloadPageButton {
+    right: -270px;
+    top: -315px;
+  }
+
+  .lost-screen {
+    z-index: 100;
+    top: 0;
+    aspect-ratio: 720/480;
+    width: 100%;
+    height: 100%;
+  }
+
+  .canvas-div {
+    top: -8px;
+  }
+
   .start-img {
     top: 0;
+    height: 100vh;
+    width: 100vw;
   }
 
   h1 {
     display: none;
+  }
+
+  .smartphone-button-area {
+    display: flex;
+    margin-top: -50px;
   }
 
   .game-instruction {
@@ -406,5 +405,11 @@ canvas {
     width: 53px;
     margin-top: -380px;
     margin-left: 161px;
+  }
+
+  #startGameButton {
+    position: absolute;
+    right: 120px;
+    top: 20px;
   }
 }

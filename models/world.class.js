@@ -13,9 +13,9 @@ class World {
   coinCounter = new Counter(200, 125);
   bottleCounter = new Counter(50, 125);
   collecting_sound = new Audio("audio/collect.mp3");
-  landing_sound = new Audio("audio/landing.mp3");
   danger_sound = new Audio("audio/danger.mp3");
-  background_sound = new Audio("audio/backgroundMusic.mp3");
+  throwing_sound = new Audio("audio/throw.mp3");
+  landing_sound = new Audio("audio/landing.mp3");
   throwableObjects = [];
  
 
@@ -48,6 +48,12 @@ class World {
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCounter.counter > 0) {
       this.generateNewBottle();
+      if (muteMusicIsClicked) {
+        this.throwing_sound.pause();
+      } else {
+      this.throwing_sound.play();
+      }
+      
     }
   }
 
@@ -60,7 +66,11 @@ class World {
 
     /**Bottles will be collected*/
     collectBottles(index) {
+      if (muteMusicIsClicked) {
+        this.collecting_sound.pause();
+      } else {
       this.collecting_sound.play();
+      }
       this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
       this.bottleCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
     }
@@ -78,7 +88,11 @@ class World {
 
   /**Coins will be collected*/
   collectCoins(index) {
+    if (muteMusicIsClicked) {
+      this.collecting_sound.pause();
+    } else {
     this.collecting_sound.play();
+    }
     this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
     this.coinCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
   }
@@ -137,7 +151,11 @@ class World {
       // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
     } else if (wasInTheAir && this.character.isColliding(enemy) && !this.level.enemies[index].dead) {
       this.character.inTheAir = false;
+      if (muteMusicIsClicked) {
+        this.landing_sound.pause();
+      } else {
       this.landing_sound.play();
+      }
       this.level.enemies[index].dead = true;
       setTimeout(() => {
         this.jumpOnChicken(index);
@@ -148,7 +166,11 @@ class World {
 /** if bottle hit endboss, endboss gets hurt */
   bottleHittedEndboss(throwableObject) {
     throwableObject.hitted();
+    if (muteMusicIsClicked) {
+      this.danger_sound.pause();
+    } else {
     this.danger_sound.play();
+    }
     background_sound.pause();
     this.endboss.hitEndboss(); // Energy wird weniger
     this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
@@ -163,7 +185,9 @@ class World {
         this.danger_sound.pause();
         this.showGameoverScreen();
         reloadPageButton.classList.remove("d-none");
-        smartphoneButtonArea.classList.add("game-over-screen");
+        smartphoneButtonArea.classList.add("d-none");
+        let muteMusic = document.getElementById("muteMusic");
+        muteMusic.classList.add("d-none");
       }
     }
   }
@@ -275,23 +299,9 @@ showGameoverScreen() {
 }
 }
 
-muteMusicIsClicked = false;
+}
 
-/**Onclick on Button, mute backgroundMusic is possible*/
-muteMusic() {
-  muteMusicIsClicked = !muteMusicIsClicked;
-  let muteMusic = document.getElementById("muteMusic");
-// Schalte den Sound aus
-  if (muteMusicIsClicked) {
-    muteMusic.src = "img/9_intro_outro_screens/mute.png";
-    this.background_sound.pause();
-    // Schalte den Sound ein
-  }
-  else  {
-    this.background_sound.play();
-    muteMusic.src = "img/9_intro_outro_screens/loud.png";
-  }
-}
-}
+
+
 
 

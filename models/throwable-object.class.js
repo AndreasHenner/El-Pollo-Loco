@@ -16,7 +16,7 @@ class ThrowableObject extends MovableObject {
   ];
 
   splashing_sound = new Audio("audio/splash.mp3");
-  throwing_sound = new Audio("audio/throw.mp3");
+  
   direction;
 
   constructor(x, y, direction) {
@@ -41,7 +41,6 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 30; // Höhe des Wurfes
     this.applyGravity(); // Flasche fällt
-    this.throwing_sound.play();
     setInterval(() => {
       if (this.direction) {
         this.x -= 10; // Wurf nach links
@@ -73,7 +72,11 @@ class ThrowableObject extends MovableObject {
   /**plays splash-animation*/
   playSplashAnimation() {
     this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
+    if (muteMusicIsClicked) {
+      this.splashing_sound.pause();
+    } else {
     this.splashing_sound.play();
+    }
     this.splashingSoundPlayed = true;
   }
 

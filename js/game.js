@@ -3,6 +3,7 @@ let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
 let background_sound = new Audio("audio/backgroundMusic.mp3");
 
+let = muteMusicIsClicked = false;
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
@@ -125,21 +126,30 @@ function leaveFullscreen() {
   buttonExitFullscreen.classList.add("d-none");
 }
 
-muteMusicIsClicked = false;
+
 
 /**switch backgroundmusic on and off*/
-function muteMusic() {
+function toggleMusic() {
   muteMusicIsClicked = !muteMusicIsClicked;
   let muteMusic = document.getElementById("muteMusic");
 // Schalte den Sound aus
   if (muteMusicIsClicked) {
+    muteMusicIsClicked = true;
     muteMusic.src = "img/9_intro_outro_screens/mute.png";
-    background_sound.pause();
+    this.stopBackgroundSound();
     // Schalte den Sound ein
   } else  {
-    background_sound.play();
+    startSound();
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
+}
+
+function stopBackgroundSound() {
+  background_sound.pause();
+}
+
+function startSound() {
+  background_sound.play();
 }
 
 /**reload page*/
@@ -159,6 +169,6 @@ function portraitModus() {
       turnDevicePage.classList.add("d-none");
       turnDevicePage.classList.remove("turn-your-device");
     }
-  }, 200);
+  }, 2);
 }
 

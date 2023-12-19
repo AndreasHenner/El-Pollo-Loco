@@ -113,7 +113,11 @@ class Character extends MovableObject {
       this.moveLeft();
     // Jump
     if (this.canJump()) {
+      if (muteMusicIsClicked) {
+        this.inTheAir_sound.pause();
+      } else {
       this.inTheAir_sound.play();
+      }
       this.jump();
     }
     this.world.camera_x = -this.x + 100;
@@ -127,7 +131,11 @@ class Character extends MovableObject {
   moveRight() {
     super.moveRight(); // moveRight() von movableObjects wird aufgerufen
     this.otherDirection = false;
+    if (muteMusicIsClicked) {
+      this.walking_sound.pause();
+    } else {
     this.walking_sound.play();
+    }
   }
 
   /**if key left is pressed, character moves left*/
@@ -139,7 +147,11 @@ class Character extends MovableObject {
   moveLeft() {
     super.moveLeft(); // moveLeft() von movableObjects wird aufgerufen
     this.otherDirection = true;
+    if (muteMusicIsClicked) {
+      this.walking_sound.pause();
+    } else {
     this.walking_sound.play();
+    }
   }
 
   /**if key space is pressed, character jump*/
@@ -174,17 +186,24 @@ class Character extends MovableObject {
     clearAllIntervals();
     reloadPageButton.classList.remove("d-none");
     smartphoneButtonArea.classList.add("game-over-screen");
+    smartphoneButtonArea.classList.add("d-none");
     this.world.showLostScreen();
     this.world.danger_sound.pause();
     background_sound.pause();
     this.walking_sound.pause();
+    let muteMusic = document.getElementById("muteMusic");
+    muteMusic.classList.add("d-none");
   }
 
   /**if character is hurt, hurt-animation is played*/
   playHurtAnimation() {
     this.playAnimation(this.IMAGES_HURT);
     this.stopSleeping();
+    if (muteMusicIsClicked) {
+      this.hurt_sound.pause();
+    } else {
     this.hurt_sound.play();
+    }
   }
 
   /**if character is jumping, jump-animation is played*/
@@ -202,7 +221,11 @@ class Character extends MovableObject {
   /**if character is sleeping, sleep-animation is played*/
   playSleepAnimation() {
     this.playAnimation(this.IMAGES_SLEEP);
+    if (muteMusicIsClicked) {
+      this.snoring_sound.pause();
+    } else {
     this.snoring_sound.play();
+    }
   }
 
   /**if character is standing, stanidng-animation is played*/
