@@ -184,12 +184,16 @@ class World {
       if (this.endboss.isDead()) {
         this.danger_sound.pause();
         this.showGameoverScreen();
-        reloadPageButton.classList.remove("d-none");
-        smartphoneButtonArea.classList.add("d-none");
-        let muteMusic = document.getElementById("muteMusic");
-        muteMusic.classList.add("d-none");
+        this.toggleButtons();
       }
     }
+  }
+
+  toggleButtons() {
+    reloadPageButton.classList.remove("d-none");
+    smartphoneButtonArea.classList.add("d-none");
+    let muteMusic = document.getElementById("muteMusic");
+    muteMusic.classList.add("d-none");
   }
 
   /**If Bottle will be thrown on a chicken, Chicken dies and disappears from screen*/

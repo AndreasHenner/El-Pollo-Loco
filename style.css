@@ -177,8 +177,8 @@ canvas {
   border-radius: 15px;
   color: black;
   background-color: #b59b45;
-  right: -245px;
-  top: -520px;
+  right: -280px;
+  top: -330px;
   font-family: "zabars", Arial, Helvetica, sans-serif;
   font-size: 48px;
 }
@@ -272,9 +272,6 @@ canvas {
 }
 
 
-
-
-
 @media (max-width: 933px) and (orientation: landscape) {
   body {
     margin-bottom: 0;
@@ -349,11 +346,6 @@ canvas {
   #muteMusic {
     position: absolute;
     top: -120px;
-  }
-
-  #reloadPageButton {
-    right: -270px;
-    top: -315px;
   }
 
   .lost-screen {

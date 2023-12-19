@@ -2,8 +2,8 @@ let canvas; // ist der Hintergrund des Spiels, ein Container mit Breite und Höh
 let world; // ist die gesamte Spielwelt mit allen Charactern und Gegenständen
 let keyboard = new Keyboard();
 let background_sound = new Audio("audio/backgroundMusic.mp3");
-
 let = muteMusicIsClicked = false;
+
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
@@ -139,7 +139,7 @@ function toggleMusic() {
     this.stopBackgroundSound();
     // Schalte den Sound ein
   } else  {
-    startSound();
+    startBackgroundSound();
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
 }
@@ -148,7 +148,7 @@ function stopBackgroundSound() {
   background_sound.pause();
 }
 
-function startSound() {
+function startBackgroundSound() {
   background_sound.play();
 }
 
