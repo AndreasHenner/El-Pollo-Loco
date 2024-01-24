@@ -21,8 +21,8 @@ class ThrowableObject extends MovableObject {
 
   constructor(x, y, direction) {
     super().loadImg("img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png");
-    this.loadImages(this.IMAGES_THROWING); // lädt Bilder für das Werfen
-    this.loadImages(this.IMAGES_SPLASH); // lädt Bilder für das Splashen der Flasche
+    this.loadImages(this.IMAGES_THROWING);
+    this.loadImages(this.IMAGES_SPLASH); 
     this.x = x;
     this.y = y;
     this.direction = direction;
@@ -40,7 +40,7 @@ class ThrowableObject extends MovableObject {
   */
   throw() {
     this.speedY = 30; // Höhe des Wurfes
-    this.applyGravity(); // Flasche fällt
+    this.applyGravity(); 
     setInterval(() => {
       if (this.direction) {
         this.x -= 10; // Wurf nach links
@@ -48,7 +48,6 @@ class ThrowableObject extends MovableObject {
         this.x += 10; // Wurf nach links
       }
     }, 25);
-     // Flasche zerbricht wenn sie aufkommt
     setInterval(() => this.bottleCanSplash(),  100);
   }
 
@@ -69,9 +68,11 @@ class ThrowableObject extends MovableObject {
     }
   }
 
-  /**plays splash-animation*/
+  /**
+   * plays splash-animation
+   */
   playSplashAnimation() {
-    this.playAnimation(this.IMAGES_SPLASH); // Splash Animation wird abgespielt
+    this.playAnimation(this.IMAGES_SPLASH); 
     if (muteMusicIsClicked) {
       this.splashing_sound.pause();
     } else {
@@ -80,7 +81,8 @@ class ThrowableObject extends MovableObject {
     this.splashingSoundPlayed = true;
   }
 
-  /**set splash to true
+  /**
+   * set splash to true
    * set deletable to true
   */
   hitted() {

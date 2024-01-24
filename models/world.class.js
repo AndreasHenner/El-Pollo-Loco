@@ -31,12 +31,16 @@ class World {
     background_sound.play();
   }
 
-  /**world is passed to the character so that the character can access variables from the world*/
+  /**
+   * world is passed to the character so that the character can access variables from the world
+   */
   setWorld() {
     this.character.world = this; // world wird an den Character übergeben dass Character auf variablen von der world zugreifen kann
   }
 
-  /**CheckCollissions and checkThrowObjects will be executed*/
+  /**
+   * CheckCollissions and checkThrowObjects will be executed
+   */
   run() {
     setInterval(() => {
       this.checkCollisions();
@@ -44,7 +48,9 @@ class World {
     }, 90);
   }
 
-  /**New generated Bottle will be thrown*/
+  /**
+   * New generated Bottle will be thrown
+   */
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCounter.counter > 0) {
       this.generateNewBottle();
@@ -57,25 +63,31 @@ class World {
     }
   }
 
-  /**New Bottle will be generate*/
+  /**
+   * New Bottle will be generate
+   */
   generateNewBottle() {
     let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 150, this.character.otherDirection);
     this.throwableObjects.push(bottle);
     this.bottleCounter.counter--;
   }
 
-    /**Bottles will be collected*/
+    /**
+     * Bottles will be collected
+     */
     collectBottles(index) {
       if (muteMusicIsClicked) {
         this.collecting_sound.pause();
       } else {
       this.collecting_sound.play();
       }
-      this.level.bottles.splice(index, 1); // Bild des Items wird gelöscht
-      this.bottleCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
+      this.level.bottles.splice(index, 1); 
+      this.bottleCounter.counter++; 
     }
 
-  /**Bottlecollection will be updated and shown on screen*/
+  /**
+   * Bottlecollection will be updated and shown on screen
+   */
   showCollectedBottles() {
     setInterval(() => {
       this.level.bottles.forEach((bottle, index) => {
@@ -86,18 +98,22 @@ class World {
     }, 10);
   }
 
-  /**Coins will be collected*/
+  /**
+   * Coins will be collected
+   */
   collectCoins(index) {
     if (muteMusicIsClicked) {
       this.collecting_sound.pause();
     } else {
     this.collecting_sound.play();
     }
-    this.level.coins.splice(index, 1); // Bild des Items wird gelöscht
-    this.coinCounter.counter++; // Collection Flaschen wird erhöht wenn eingesammelt
+    this.level.coins.splice(index, 1); 
+    this.coinCounter.counter++; 
   }
 
-  /**Coinscollection will be updated and shown on screen*/
+  /**
+   * Coinscollection will be updated and shown on screen
+   */
   showCollectedCoins() {
     setInterval(() => {
       this.level.coins.forEach((coin, index) => {
@@ -108,19 +124,16 @@ class World {
     }, 10);
   }
 
-  /**Collission will be checked and detected*/
+  /**
+   * Collission will be checked and detected
+   */
   checkCollisions() {
     this.endboss = this.level.enemies[this.level.enemies.length - 1]; // Endboss ist immer das letzte Element im Array
-    
-    // Character mit Enemy(Chicken)
     this.level.enemies.forEach((enemy, index) => this.characterHittedChicken(enemy, index));
-    // Character mit Endboss
     if (this.character.isColliding(this.endboss)) {
        this.characterWasHit();
     }
-    // Endboss mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject) => this.bottleKillsEndboss(throwableObject));
-    // Enemies mit ThrowableObject(Bottle)
     this.throwableObjects.forEach((throwableObject, index) => { 
         this.bottleKillsChicken(throwableObject);
         if (throwableObject.deletable) {
@@ -129,26 +142,30 @@ class World {
     });
 }
 
-/**Character is hurt. Energylevel is decreased*/
+/**
+ * Character is hurt. Energylevel is decreased
+ */
   characterWasHit() { 
-    this.character.hitCharacter();
+    this.character.hit();
     this.statusBarHealth.setPercentage(this.character.energy);
   }
 
-  /**Chicken removes from the map when it is dead */
+  /**
+   * Chicken removes from the map when it is dead 
+   */
   jumpOnChicken(index) {
     if (index < this.level.enemies.length -1) { // Endboss wird nie gelöscht beim Draufspringen
         this.level.enemies.splice(index, 1);
 }
   }
   
-  /**Character hit Chicken. Either on the ground(Character gets hurt) or Jumping at the chicken(Chicken dies) */
+  /**
+   * Character hit Chicken. Either on the ground(Character gets hurt) or Jumping at the chicken(Chicken dies)
+   */
   characterHittedChicken(enemy, index) {
     let wasInTheAir = this.character.inTheAir;
-    // Aktionen ausführen, wenn der Charakter mit einem Feind kollidiert und nicht in der Luft ist
     if (this.character.isColliding(enemy) && !this.character.inTheAir && !this.level.enemies[index].dead) {
       this.characterWasHit();
-      // Aktionen ausführen, wenn der Charakter in der Luft war, jetzt auf dem Boden ist und mit einem Feind kollidiert
     } else if (wasInTheAir && this.character.isColliding(enemy) && !this.level.enemies[index].dead) {
       this.character.inTheAir = false;
       if (muteMusicIsClicked) {
@@ -163,7 +180,9 @@ class World {
     }
   }
 
-/** if bottle hit endboss, endboss gets hurt */
+/**
+ * if bottle hit endboss, endboss gets hurt
+ */
   bottleHittedEndboss(throwableObject) {
     throwableObject.hitted();
     if (muteMusicIsClicked) {
@@ -172,11 +191,13 @@ class World {
     this.danger_sound.play();
     }
     background_sound.pause();
-    this.endboss.hitEndboss(); // Energy wird weniger
+    this.endboss.hit(); // Energy wird weniger
     this.statusBarEndboss.setPercentage(this.endboss.energy); // Statusbar wird aktualisiert
   }
 
-  /** endboss dies because hitted by bottle and game is over */
+  /**
+   * endboss dies because hitted by bottle and game is over
+   */
   bottleKillsEndboss(throwableObject) {
     if (this.endboss.isColliding(throwableObject) && !throwableObject.splashed) {
       this.bottleHittedEndboss(throwableObject);
@@ -189,6 +210,9 @@ class World {
     }
   }
 
+  /**
+   * shows or hide buttons, depending on game is over or not
+   */
   toggleButtons() {
     reloadPageButton.classList.remove("d-none");
     smartphoneButtonArea.classList.add("d-none");
@@ -196,13 +220,15 @@ class World {
     muteMusic.classList.add("d-none");
   }
 
-  /**If Bottle will be thrown on a chicken, Chicken dies and disappears from screen*/
+  /**
+   * If Bottle will be thrown on a chicken, Chicken dies and disappears from screen
+   */
   bottleKillsChicken(throwableObject) {
     for (let index = 0; index < this.level.enemies.length; index++) {
       let enemy = this.level.enemies[index];
       if (enemy.isColliding(throwableObject) && !throwableObject.splashed) {
-        throwableObject.hitted(); // Flasche zerplatzt
-        this.level.enemies[index].dead = true; // Enemy ist tot
+        throwableObject.hitted();
+        this.level.enemies[index].dead = true; 
         setTimeout(() => {
           this.level.enemies.splice(index, 1);
         }, 200);
@@ -210,21 +236,23 @@ class World {
     }
   }
 
-  /**Elements will be drawn into the Canvas*/
+  /**
+   * Elements will be drawn into the Canvas
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // Canvas wird gelöscht
 
     this.ctx.translate(this.camera_x, 0); // Hintergrund wird nach links verschoben um die Variable camera_x
 
     // fixe Koordinaten
-    this.addObjectsToMap(this.level.backgroundObjects); // BackgroundObjects wird zur Map hinzugefügt
+    this.addObjectsToMap(this.level.backgroundObjects); 
 
-    this.addObjectsToMap(this.level.enemies); // Enemies wird zur Map hinzugefügt
-    this.addObjectsToMap(this.level.clouds); // Clouds wird zur Map hinzugefügt
-    this.addObjectsToMap(this.level.coins); // Coins werden zur Map hinzugefügt
-    this.addObjectsToMap(this.level.bottles); // Bottles werden zur Map hinzugefügt
-    this.addObjectsToMap(this.throwableObjects); // ThrowableObjekt wird zur Map hinzugefügt
-    this.addToMap(this.character); // der Character wird gezeichnet und im Canvas angezeigt
+    this.addObjectsToMap(this.level.enemies); 
+    this.addObjectsToMap(this.level.clouds); 
+    this.addObjectsToMap(this.level.coins); 
+    this.addObjectsToMap(this.level.bottles); 
+    this.addObjectsToMap(this.throwableObjects); 
+    this.addToMap(this.character); 
 
     this.ctx.translate(-this.camera_x, 0); // Verschieben des Hintergrundes rückgängig machen
 
@@ -239,13 +267,15 @@ class World {
     this.ctx.font = "40px zabars";
 
     // die Function draw wird immer wieder aufgerufen
-    let self = this; // das Wort this wird hier nicht mehr erkannt, deshalb ist this = self
+    let self = this; 
     requestAnimationFrame(function () {
       self.draw();
     });
   }
 
-  /**Objects will be added to the Map*/
+  /**
+   * Objects will be added to the Map
+   */
   addObjectsToMap(objects) {
     objects.forEach((o) => { // für jedes Objekt(o) im Array objects wird die Funktion addToMap() aufgerufen
       this.addToMap(o);
@@ -264,7 +294,9 @@ class World {
     }
   }
 
-  /**Image will be mirrored*/
+  /**
+   * Image will be mirrored
+   */
   flipImage(mo) {
     this.ctx.save(); // speichert aktuellen Status/Eigenschaften vom Kontext
     this.ctx.translate(mo.width, 0); // Bild wird gespiegelt
@@ -272,37 +304,38 @@ class World {
     mo.x = mo.x * -1; // X-Koordinate wird gespiegelt
   }
 
-  /**Mirroring is undone*/
+  /**
+   * Mirroring is undone
+   */
   flipImageBack(mo) {
     // Spiegelung wird rückgängig gemacht
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
 
-  /**If Character is dead, Lostcreen will be shown*/
+  /**
+   * If Character is dead, Lostcreen will be shown
+   */
   showLostScreen() {
     let lostScreen = document.getElementById("lostScreen");
     if (this.character.isDead()) {
-        // Der Charakter ist tot, zeige das Bild an
         lostScreen.classList.remove("d-none");
     } else {
-        // Der Charakter ist nicht tot, verstecke den Lostbildschirm
         lostScreen.classList.add("d-none");
     }
 }
 
-/**If Endboss is dead, GameOverscreen will be shown*/
+/**
+ * If Endboss is dead, GameOverscreen will be shown
+ */
 showGameoverScreen() {
   let gameoverScreen = document.getElementById("gameoverScreen");
   if (this.endboss.isDead()) {
-    // Der Endboss ist tot, zeige den Game-Over-Bildschirm an
     gameoverScreen.classList.remove("d-none");
 } else {
-    // Der Endboss lebt, verstecke den Game-Over-Bildschirm
     gameoverScreen.classList.add("d-none");
 }
 }
-
 }
 
 

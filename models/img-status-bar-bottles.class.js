@@ -1,5 +1,4 @@
 class ImgStatusbarBottles extends MovableObject {
-  //  hat alle Eigenschaften von MovableObject da es vererbt wird!
 
   
   constructor() {

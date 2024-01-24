@@ -1,17 +1,18 @@
 class Cloud extends MovableObject {
-  // Cloud hat alle Eigenschaften von MovableObject da es vererbt wird!
  
   width = 400;
   height = 300;
   y = 75;
 
   constructor(imagePath, x) {
-    super().loadImg(imagePath); // loadImg wird hier von der SuperKlasse aufgerufen
+    super().loadImg(imagePath); 
     this.x = x;
     this.animate(); // die Function animate wird aufgerufen
   }
 
-  /**Clouds move left*/
+  /**
+   * Clouds move left
+   */
   animate() {
     setInterval(() => {
       this.moveLeft();

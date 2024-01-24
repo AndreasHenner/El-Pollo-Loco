@@ -24,16 +24,13 @@ class ChickenSmall extends MovableObject { // Chicken hat alle Eigenschaften von
         this.animate();
     }
     
-    /**let chicken move left*/
+    /**
+     * let chicken move left
+     */
     animate() {
-      // Move
       setInterval(() => this.moveLeft(), 1000 / 60);
-      
-      // Animation for walking
       setInterval(() => {
         if (!this.dead) this.playAnimation(this.IMAGES_WALKING);}, 100);
-    
-      // Animation for dead
       setInterval(() => {
         if (this.dead) {
           this.playDeadAnimation();
@@ -41,7 +38,9 @@ class ChickenSmall extends MovableObject { // Chicken hat alle Eigenschaften von
       }, 5); 
     }
   
-    /**played dead-animation*/
+    /**
+     * played dead-animation
+     */
     playDeadAnimation() {
       this.playAnimation(this.IMAGES_DEAD);
     }

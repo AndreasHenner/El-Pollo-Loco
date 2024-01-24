@@ -22,14 +22,18 @@ class StatusbarHealth extends MovableObject {
     this.setPercentage(100);
   }
 
-  /**images of the statusbar will be loaded into imachecache*/
+  /**
+   * images of the statusbar will be loaded into imachecache
+   */
   setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
-  /**images of the statusbar will be changed regarding the status of hurt from character*/
+  /**
+   * images of the statusbar will be changed regarding the status of hurt from character
+   */
     resolveImageIndex() {
     if (this.percentage == 100) {
       return 5; // Das 5. Bild im Aray IMAGES

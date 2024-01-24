@@ -15,7 +15,7 @@ class Chicken extends MovableObject {
   IMAGES_DEAD = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
   
   constructor() {
-    super().loadImg("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"); // loadImg wird hier von der SuperKlasse aufgerufen
+    super().loadImg("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"); 
     this.x = 400 + Math.random() * 3500; // die Chicken starten immer an einem zufälligem Startpunkt
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
@@ -23,16 +23,13 @@ class Chicken extends MovableObject {
     this.animate();
   }
 
-  /**let chicken move left*/
+  /**
+   * let chicken move left
+   */
   animate() {
-    // Move
     setInterval(() => this.moveLeft(), 1000 / 60);
-    
-    // Animation for walking
     setInterval(() => {
       if (!this.dead) this.playAnimation(this.IMAGES_WALKING);}, 100);
-  
-    // Animation for dead
     setInterval(() => {
       if (this.dead) {
         this.playDeadAnimation();
@@ -40,7 +37,9 @@ class Chicken extends MovableObject {
     }, 5); 
   }
 
-  /**played dead-animation*/
+  /**
+   * played dead-animation
+   */
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
   }

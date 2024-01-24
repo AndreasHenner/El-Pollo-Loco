@@ -1,6 +1,5 @@
 class Bottles extends MovableObject {
-  //  hat alle Eigenschaften von MovableObject da es vererbt wird!
-
+ 
   width = 60;
   height = 60;
  

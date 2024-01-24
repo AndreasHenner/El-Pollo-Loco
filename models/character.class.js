@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-  // Character hat alle Eigenschaften von MovableObject da es vererbt wird!
+ 
 
   height = 300;
   width = 120;
@@ -77,7 +77,7 @@ class Character extends MovableObject {
   ];
 
   world; //Variable aus der Klasse world
-  walking_sound = new Audio("audio/characterWalk.mp3"); // Laufsound wird in der Variablen gespeichert
+  walking_sound = new Audio("audio/characterWalk.mp3"); 
   snoring_sound = new Audio("audio/snoring.mp3");
   inTheAir_sound = new Audio("audio/inTheAir.mp3");
   hurt_sound = new Audio("audio/hurt.mp3");
@@ -85,33 +85,34 @@ class Character extends MovableObject {
   inTheAir = false;
 
   constructor() {
-    super().loadImg("img/2_character_pepe/2_walk/W-21.png"); // loadImg wird hier von der SuperKlasse aufgerufen
-    this.loadImages(this.IMAGES_WALKING); // lädt Bilder für das Laufen
-    this.loadImages(this.IMAGES_JUMPING); // lädt Bilder für das Springen
-    this.loadImages(this.IMAGES_DEAD); // lädt Bilder für das Sterben
-    this.loadImages(this.IMAGES_HURT); // lädt Bilder für das Verletzen
-    this.loadImages(this.IMAGES_SLEEP); // Bilder für das Schlafen
-    this.loadImages(this.IMAGES_STANDING); // Bilder für das Stehen
+    super().loadImg("img/2_character_pepe/2_walk/W-21.png");
+    this.loadImages(this.IMAGES_WALKING); 
+    this.loadImages(this.IMAGES_JUMPING); 
+    this.loadImages(this.IMAGES_DEAD); 
+    this.loadImages(this.IMAGES_HURT); 
+    this.loadImages(this.IMAGES_SLEEP); 
+    this.loadImages(this.IMAGES_STANDING); 
     this.applyGravity();
     this.animate();
     this.moveRight();
   }
 
-  /**execute moveCharacter and playCharacter*/
+  /**
+   * execute moveCharacter and playCharacter
+   */
   animate() {
     setInterval(() => this.moveCharacter(), 1000 / 30);
     setInterval(() => this.playCharacter(), 75);
   }
 
-  /**execute movefunctions for character*/
+  /**
+   * execute movefunctions for character
+   */
   moveCharacter() {
-    // Walk right
     if (this.canMoveRight()) 
       this.moveRight();
-    // Walk left
     if (this.canMoveLeft()) 
       this.moveLeft();
-    // Jump
     if (this.canJump()) {
       if (muteMusicIsClicked) {
         this.inTheAir_sound.pause();
@@ -123,13 +124,18 @@ class Character extends MovableObject {
     this.world.camera_x = -this.x + 100;
   }
 
-  /**if key right is pressed, character moves right*/
+  /**
+   * if key right is pressed, character moves right
+  */
   canMoveRight() {
     return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
   }
-  /**let character move right*/
+
+  /**
+   * let character move right
+   */
   moveRight() {
-    super.moveRight(); // moveRight() von movableObjects wird aufgerufen
+    super.moveRight(); 
     this.otherDirection = false;
     if (muteMusicIsClicked) {
       this.walking_sound.pause();
@@ -138,12 +144,16 @@ class Character extends MovableObject {
     }
   }
 
-  /**if key left is pressed, character moves left*/
+  /**
+   * if key left is pressed, character moves left
+   * */
   canMoveLeft() {
     return this.world.keyboard.LEFT && this.x > 0;
   }
 
-  /**let character move left*/
+  /**
+   * let character move left
+   */
   moveLeft() {
     super.moveLeft(); // moveLeft() von movableObjects wird aufgerufen
     this.otherDirection = true;
@@ -154,25 +164,24 @@ class Character extends MovableObject {
     }
   }
 
-  /**if key space is pressed, character jump*/
+  /**
+   * if key space is pressed, character jump
+   */
   canJump() {
     return this.world.keyboard.SPACE && !this.isAboveGround();
   }
 
-  /**animations are played depending on the status of the character*/
+  /**
+   * animations are played depending on the status of the character
+   */
   playCharacter() {
-    // Dead-Animation
     if (this.isDead()) this.playDeadAnimation();
-    // Hurt-Animation
     else if (this.isHurt()) this.playHurtAnimation();
-    // Jump-Animation
     else if (this.isAboveGround()){
       this.playJumpAnimation();
       this.inTheAir = true;
     } 
-    // Walk-Animation
     else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playWalkAnimation();
-    // Sleep-Animation
     else {
       this.walking_sound.pause();
       if (this.sleepCounter > 40) this.playSleepAnimation();
@@ -180,7 +189,9 @@ class Character extends MovableObject {
     }
   }
 
-  /**if character is dead, dead-animation is played*/
+  /**
+   * if character is dead, dead-animation is played
+   */
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     clearAllIntervals();
@@ -195,7 +206,9 @@ class Character extends MovableObject {
     muteMusic.classList.add("d-none");
   }
 
-  /**if character is hurt, hurt-animation is played*/
+  /**
+   * if character is hurt, hurt-animation is played
+   */
   playHurtAnimation() {
     this.playAnimation(this.IMAGES_HURT);
     this.stopSleeping();
@@ -206,19 +219,25 @@ class Character extends MovableObject {
     }
   }
 
-  /**if character is jumping, jump-animation is played*/
+  /**
+   * if character is jumping, jump-animation is played
+   */
   playJumpAnimation() {
     this.playAnimation(this.IMAGES_JUMPING);
     this.stopSleeping();
   }
 
-  /**if character is walking, walk-animation is played*/
+  /**
+   * if character is walking, walk-animation is played
+   */
   playWalkAnimation() {
     this.playAnimation(this.IMAGES_WALKING);
     this.stopSleeping();
   }
 
-  /**if character is sleeping, sleep-animation is played*/
+  /**
+   * if character is sleeping, sleep-animation is played
+   */
   playSleepAnimation() {
     this.playAnimation(this.IMAGES_SLEEP);
     if (muteMusicIsClicked) {
@@ -228,14 +247,18 @@ class Character extends MovableObject {
     }
   }
 
-  /**if character is standing, stanidng-animation is played*/
+  /**
+   * if character is standing, stanidng-animation is played
+   */
   playStandingAnimation() {
     this.inTheAir = false;
     this.sleepCounter++;
     this.playAnimation(this.IMAGES_STANDING);
   }
 
-  /**if character is not sleeping, sleep-animation will be stopped*/
+  /**
+   * if character is not sleeping, sleep-animation will be stopped
+   */
   stopSleeping() {
     this.sleepCounter = 0;
     this.snoring_sound.pause();

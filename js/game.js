@@ -4,6 +4,9 @@ let keyboard = new Keyboard();
 let background_sound = new Audio("audio/backgroundMusic.mp3");
 let = muteMusicIsClicked = false;
 
+/**
+ *initialise
+ */
 function init() {
   canvas = document.getElementById("canvas"); // es wird der Variable "canvas" das HTML Element "canvas" zugewiesen!
   world = new World(canvas, keyboard); // neues Object namens World wird angelegt und die Variable canvas und keyboard werden mitgegeben
@@ -13,14 +16,19 @@ function init() {
   muteMusic.classList.remove("d-none");
   startGameButton.classList.add("d-none");
   startImg.classList.add("d-none");
+  iconFullscreenArea.classList.remove("hideBeforeStart");
 }
 
-/**all Intervalls stops*/
+/*
+*all Intervalls stops
+*/
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-/**Operation of the Smartphone-Touchstart */
+/*
+*Operation of the Smartphone-Touchstart 
+*/
 window.addEventListener("touchstart", (e) => {
   const btnLeft = document.getElementById("btnLeft");
   const btnRight = document.getElementById("btnRight");
@@ -36,7 +44,9 @@ window.addEventListener("touchstart", (e) => {
   }
 });
 
-/**Operation of the Smartphone-Touchend */
+/*
+*Operation of the Smartphone-Touchend 
+*/
 window.addEventListener("touchend", (e) => {
   const btnLeft = document.getElementById("btnLeft");
   const btnRight = document.getElementById("btnRight");
@@ -52,7 +62,9 @@ window.addEventListener("touchend", (e) => {
   }
 });
 
-/**Keyboard operation if keydown*/
+/*
+*Keyboard operation if keydown
+*/
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == "38") {
     keyboard.UP = true;
@@ -80,7 +92,9 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-/**Keyboard operation if keyup*/
+/**
+ * Keyboard operation if keyup
+ * */
 // wenn Taste losgelassen wird wird es wieder auf false gesetzt!
 window.addEventListener("keyup", (e) => {
   if (e.keyCode == "38") {
@@ -109,7 +123,9 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
-/**open fullscsreen*/
+/*
+*open fullscsreen
+*/
 function showFullscreen() {
   let canvas = document.getElementById("canvasDiv");
   let buttonExitFullscreen = document.getElementById("buttonExitFullscreen");
@@ -117,7 +133,9 @@ function showFullscreen() {
   canvas.requestFullscreen();
 }
 
-/**close fullscreen */
+/** 
+*close fullscreen 
+*/
 function leaveFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -128,39 +146,50 @@ function leaveFullscreen() {
 
 
 
-/**switch backgroundmusic on and off*/
+/**
+*switch backgroundmusic on and off
+*/
 function toggleMusic() {
   muteMusicIsClicked = !muteMusicIsClicked;
   let muteMusic = document.getElementById("muteMusic");
-// Schalte den Sound aus
   if (muteMusicIsClicked) {
+    stopBackgroundSound();
     muteMusicIsClicked = true;
     muteMusic.src = "img/9_intro_outro_screens/mute.png";
-    this.stopBackgroundSound();
-    // Schalte den Sound ein
   } else  {
     startBackgroundSound();
     muteMusic.src = "img/9_intro_outro_screens/loud.png";
   }
 }
 
+
+/**
+ *stop Backgroundsound
+ */
 function stopBackgroundSound() {
   background_sound.pause();
 }
 
+/**
+ *start Backgroundsound
+ */
 function startBackgroundSound() {
   background_sound.play();
 }
 
-/**reload page*/
+/**
+*reload page
+*/
 function reloadPage() {
   location.reload();
 }
 
-/**track screenWidth and shows Text if Mobile is in portraitmodus*/
+/**
+*track screenWidth and shows Text if Mobile is in portraitmodus
+*/
 function portraitModus() {
   setInterval(() => {
-    let screenWidth = window.innerWidth;
+    let screenWidth = window.innerWidth; 
     let turnDevicePage = document.getElementById("turnDevicePage");
     if (screenWidth <= 430) {
      turnDevicePage.classList.remove("d-none");

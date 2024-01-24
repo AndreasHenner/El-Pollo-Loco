@@ -17,7 +17,7 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 101%;
   height: 100%;
   background-image: url("img/9_intro_outro_screens/start/desert.jpg");
   background-position: center;
@@ -194,10 +194,12 @@ canvas {
 
 #btnRight{
   width: 35px;
+  margin-left: 20px;
 }
 
 #btnJump{
   width: 35px;
+  margin-right: 20px;
 }
 
 #btnThrow{
@@ -216,13 +218,13 @@ canvas {
 
 .button-left-right {
   position: absolute;
-  left: 100px;
+  left: 60px;
 }
 
 .button-jump-throw {
   position: absolute;
   display: flex;
-  right: 100px;
+  right: 60px;
 }
 
 .mute-music {
@@ -253,12 +255,16 @@ canvas {
   align-items: center;
   flex-direction: column;
   gap: 40px;
- display: flex;
+  display: flex;
 }
 
 .img-turn-your-device {
   margin-top: 50px;
   height: 200px;
+}
+
+.hideBeforeStart {
+  display: none!important;
 }
 
 /* Responsive Smartphone */

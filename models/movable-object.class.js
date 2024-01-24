@@ -6,7 +6,8 @@ class MovableObject extends DrawableObject {
   energy = 100;
   collection = 0;
   lastHit = 0;
-
+  damage = 5;
+  
   offset = {
     top: 0,
     left: 0,
@@ -48,9 +49,11 @@ class MovableObject extends DrawableObject {
     );
   }
 
-  /**if endboss is colliding, energy is reducing*/
-  hitEndboss() {
-    this.energy -= 20; //  sobald kollidiert, Energie des Endboss wird weniger
+  /**
+   * if endboss or character is colliding, energy is reducing
+   */
+  hit() {
+    this.energy -= this.damage;
     if (this.energy < 0) {
       this.energy = 0;
     } else {
@@ -58,17 +61,9 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  /**if character is colliding, energy is reducing*/
-  hitCharacter() {
-    this.energy -= 5; //  sobald kollidiert, Energie des Characters wird weniger
-    if (this.energy < 0) {
-      this.energy = 0;
-    } else {
-      this.lastHit = new Date().getTime(); // Zeit in Zahlenform, ms die vergangen sind seit dem 01.01.1970 - lastHit wird der Zeit gleichgesetzt
-    }
-  }
-
-  /***/
+  /**
+   * 
+  */
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit; // Differenz in ms
     timepassed = timepassed / 1000; // Differenz in Sekunden
