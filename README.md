@@ -30,5 +30,6 @@ https://github.com/your_username/el-polo-loco.git
 
 Navigate to the project directory:
 
-cd el-polo-loco
+"cd el-polo-loco"
+
 Open index.html in your preferred web browser.
