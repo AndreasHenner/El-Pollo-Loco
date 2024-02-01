@@ -8,7 +8,6 @@ Classic Gameplay: Enjoy the timeless fun of a jump and run game.
 Object-Oriented Design: Utilizes object-oriented programming for code organization and modularity.
 Responsive Design: The game interface adjusts seamlessly to different screen sizes and devices.
 Interactive Elements: Engage with various interactive elements and obstacles throughout the game.
-High Score Tracking: Keep track of your highest scores and compete with friends.
 
 ## How to Play
 Controls:
