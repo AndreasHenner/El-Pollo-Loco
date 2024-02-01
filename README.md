@@ -1,7 +1,36 @@
-# El Polo Loco
+# El Polo Loco - Jump and Run Game
 
-Jump, run and throw game based on object-oriented approach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen.
+## Description
+El Polo Loco is a classic jump and run game written in JavaScript, CSS, and HTML. It employs object-oriented programming principles to create an engaging gaming experience.
 
-## Made with
+## Features
+Classic Gameplay: Enjoy the timeless fun of a jump and run game.
+Object-Oriented Design: Utilizes object-oriented programming for code organization and modularity.
+Responsive Design: The game interface adjusts seamlessly to different screen sizes and devices.
+Interactive Elements: Engage with various interactive elements and obstacles throughout the game.
+High Score Tracking: Keep track of your highest scores and compete with friends.
 
-Javascript, HTML and CSS
+## How to Play
+Controls:
+Use the arrow keys (or on-screen buttons) to move the character.
+Press the up arrow key to jump over obstacles.
+
+## Objective:
+Navigate the character through the levels, avoiding obstacles and collecting points.
+Reach the end of each level to progress to the next.
+
+## Scoring:
+Collect coins and power-ups to increase your score.
+Each level presents new challenges and opportunities to earn points.
+
+## Installation
+To run El Polo Loco locally, follow these steps:
+
+Clone the repository to your local machine:
+
+https://github.com/your_username/el-polo-loco.git
+
+Navigate to the project directory:
+
+cd el-polo-loco
+Open index.html in your preferred web browser.
