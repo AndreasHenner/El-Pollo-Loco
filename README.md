@@ -12,15 +12,14 @@ Interactive Elements: Engage with various interactive elements and obstacles thr
 ## How to Play
 Controls:
 Use the arrow keys (or on-screen buttons) to move the character.
-Press the up arrow key to jump over obstacles.
+Press the space key to jump over obstacles.
 
 ## Objective:
-Navigate the character through the levels, avoiding obstacles and collecting points.
-Reach the end of each level to progress to the next.
+Navigate the character through the levels, avoiding obstacles and collecting bottles.
+Reach the end of the level to fight against the endboss.
 
 ## Scoring:
-Collect coins and power-ups to increase your score.
-Each level presents new challenges and opportunities to earn points.
+Collect coins and bottles to get enough to fight against the endboss.
 
 ## Installation
 To run El Polo Loco locally, follow these steps:
